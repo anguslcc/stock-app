@@ -1,0 +1,34 @@
+server:
+  port: 8060
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${DISCOVERY_SERVER_URL:http://localhost:8061}/eureka/
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId:-},%X{spanId:-}] ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+spring:
+  output:
+    ansi:
+      enabled: always
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: stock-query-service
+          uri: lb://stock-query-service
+          predicates:
+            - Path=/stock-query/**
+          filters:
+            - RewritePath=/stock-query/(?<path>.*), /$\{path}
+
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

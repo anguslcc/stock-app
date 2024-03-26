@@ -1,0 +1,96 @@
+version: '3.7'
+services:
+  stock-quote-producer:
+    image: ${GROUP_ID}/stock-quote-producer:${SERVICE_VERSION:-latest}
+    ports:
+      - "5005:5005"
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xms128m -Xmx256m"
+      - "KAFKA-CONFIG_BOOTSTRAP-SERVERS=kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092"
+      - "KAFKA-CONFIG_SCHEMA-REGISTRY-URL=http://schema-registry:9000"
+      - "CONFIG_SERVER_URL=${CONFIG_SERVER_URL}"
+    networks:
+      - ${GLOBAL_NETWORK:-services}
+    depends_on:
+      config-service:
+        condition: service_healthy
+      kafka-broker-1:
+        condition: service_healthy
+      kafka-broker-2:
+        condition: service_healthy
+      kafka-broker-3:
+        condition: service_healthy
+      schema-registry:
+        condition: service_healthy
+
+  config-service:
+    image: ${GROUP_ID}/config-service:${SERVICE_VERSION:-latest}
+    hostname: localhost
+    ports:
+      - "8088:8088"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "${CONFIG_SERVER_URL}/stock-quote-producer/default" ]
+      start_period: 10s
+      interval: 5s
+      timeout: 10s
+      retries: 4
+    networks:
+      - ${GLOBAL_NETWORK:-services}
+
+  discovery-service:
+    image: ${GROUP_ID}/discovery-service:${SERVICE_VERSION:-latest}
+    ports:
+      - "8061:8061"
+    depends_on:
+      config-service:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8061" ]
+      start_period: 10s
+      interval: 5s
+      timeout: 10s
+      retries: 4
+    environment:
+      - "CONFIG_SERVER_URL=${CONFIG_SERVER_URL}"
+    networks:
+      - ${GLOBAL_NETWORK:-services}
+
+  stock-query-service:
+    image: ${GROUP_ID}/stock-query-service:${SERVICE_VERSION:-latest}
+    ports:
+      - "8100:8100"
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+      config-service:
+        condition: service_healthy
+    environment:
+      - "CONFIG_SERVER_URL=${CONFIG_SERVER_URL}"
+      - "DISCOVERY_SERVER_URL=${DISCOVERY_SERVER_URL}"
+      - "SERVICE_NAME=stock-query-service"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "stock-query-service:8100/actuator/health" ]
+      start_period: 10s
+      interval: 5s
+      timeout: 10s
+      retries: 4
+    networks:
+      - ${GLOBAL_NETWORK:-services}
+
+  gateway-service:
+    image: ${GROUP_ID}/gateway-service:${SERVICE_VERSION:-latest}
+    ports:
+      - "8060:8060"
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+      config-service:
+        condition: service_healthy
+      stock-query-service:
+        condition: service_healthy
+    environment:
+      - "CONFIG_SERVER_URL=${CONFIG_SERVER_URL}"
+      - "DISCOVERY_SERVER_URL=${DISCOVERY_SERVER_URL}"
+    networks:
+      - ${GLOBAL_NETWORK:-services}      
+    

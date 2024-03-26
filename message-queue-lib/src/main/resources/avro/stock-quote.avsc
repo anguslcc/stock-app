@@ -1,0 +1,36 @@
+{
+  "namespace": "org.finance.messagequeue.kafka.model.avro",
+  "type": "record",
+  "name": "StockQuoteAvroModel",
+  "fields": [
+    {
+      "name": "symbol",
+      "type": "string"
+    },
+    {
+      "name": "exchange",
+      "type": "string"
+    },
+    {
+      "name": "currency",
+      "type": "string"
+    },
+    {
+      "name": "low",
+      "type": "double"
+    },
+    {
+      "name": "high",
+      "type": "double"
+    },
+    {
+      "name": "lastUpdated",
+      "type": [
+        "long"
+      ],
+      "logicalType": [
+        "timestamp-millis"
+      ]
+    }
+  ]
+}
