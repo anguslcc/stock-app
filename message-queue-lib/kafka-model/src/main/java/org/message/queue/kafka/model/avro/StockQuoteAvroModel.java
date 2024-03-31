@@ -36,6 +36,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Return the BinaryMessageEncoder instance used by this class.
+   *
    * @return the message encoder used by this class
    */
   public static BinaryMessageEncoder<StockQuoteAvroModel> getEncoder() {
@@ -44,6 +45,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Return the BinaryMessageDecoder instance used by this class.
+   *
    * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<StockQuoteAvroModel> getDecoder() {
@@ -51,7 +53,9 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
   }
 
   /**
-   * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
+   * Create a new BinaryMessageDecoder instance for this class that uses the specified
+   * {@link SchemaStore}.
+   *
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
    * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
@@ -61,6 +65,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Serializes this StockQuoteAvroModel to a ByteBuffer.
+   *
    * @return a buffer holding the serialized data for this instance
    * @throws java.io.IOException if this instance could not be serialized
    */
@@ -70,9 +75,11 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Deserializes a StockQuoteAvroModel from a ByteBuffer.
+   *
    * @param b a byte buffer holding serialized data for an instance of this class
    * @return a StockQuoteAvroModel instance decoded from the given buffer
-   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of
+   *                             this class
    */
   public static StockQuoteAvroModel fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
@@ -87,20 +94,20 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
   private java.lang.Object lastUpdated;
 
   /**
-   * Default constructor.  Note that this does not initialize fields
-   * to their default values from the schema.  If that is desired then
-   * one should use <code>newBuilder()</code>.
+   * Default constructor.  Note that this does not initialize fields to their default values from
+   * the schema.  If that is desired then one should use <code>newBuilder()</code>.
    */
   public StockQuoteAvroModel() {
   }
 
   /**
    * All-args constructor.
-   * @param symbol The new value for symbol
-   * @param exchange The new value for exchange
-   * @param currency The new value for currency
-   * @param low The new value for low
-   * @param high The new value for high
+   *
+   * @param symbol      The new value for symbol
+   * @param exchange    The new value for exchange
+   * @param currency    The new value for currency
+   * @param low         The new value for low
+   * @param high        The new value for high
    * @param lastUpdated The new value for lastUpdated
    */
   public StockQuoteAvroModel(java.lang.String symbol, java.lang.String exchange,
@@ -175,6 +182,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Gets the value of the 'symbol' field.
+   *
    * @return The value of the 'symbol' field.
    */
   public java.lang.String getSymbol() {
@@ -184,6 +192,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Sets the value of the 'symbol' field.
+   *
    * @param value the value to set.
    */
   public void setSymbol(java.lang.String value) {
@@ -192,6 +201,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Gets the value of the 'exchange' field.
+   *
    * @return The value of the 'exchange' field.
    */
   public java.lang.String getExchange() {
@@ -201,6 +211,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Sets the value of the 'exchange' field.
+   *
    * @param value the value to set.
    */
   public void setExchange(java.lang.String value) {
@@ -209,6 +220,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Gets the value of the 'currency' field.
+   *
    * @return The value of the 'currency' field.
    */
   public java.lang.String getCurrency() {
@@ -218,6 +230,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Sets the value of the 'currency' field.
+   *
    * @param value the value to set.
    */
   public void setCurrency(java.lang.String value) {
@@ -226,6 +239,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Gets the value of the 'low' field.
+   *
    * @return The value of the 'low' field.
    */
   public double getLow() {
@@ -235,6 +249,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Sets the value of the 'low' field.
+   *
    * @param value the value to set.
    */
   public void setLow(double value) {
@@ -243,6 +258,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Gets the value of the 'high' field.
+   *
    * @return The value of the 'high' field.
    */
   public double getHigh() {
@@ -252,6 +268,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Sets the value of the 'high' field.
+   *
    * @param value the value to set.
    */
   public void setHigh(double value) {
@@ -260,6 +277,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Gets the value of the 'lastUpdated' field.
+   *
    * @return The value of the 'lastUpdated' field.
    */
   public java.lang.Object getLastUpdated() {
@@ -269,6 +287,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Sets the value of the 'lastUpdated' field.
+   *
    * @param value the value to set.
    */
   public void setLastUpdated(java.lang.Object value) {
@@ -277,6 +296,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Creates a new StockQuoteAvroModel RecordBuilder.
+   *
    * @return A new StockQuoteAvroModel RecordBuilder
    */
   public static org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder newBuilder() {
@@ -285,6 +305,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
   /**
    * Creates a new StockQuoteAvroModel RecordBuilder by copying an existing Builder.
+   *
    * @param other The existing builder to copy.
    * @return A new StockQuoteAvroModel RecordBuilder
    */
@@ -298,7 +319,9 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
   }
 
   /**
-   * Creates a new StockQuoteAvroModel RecordBuilder by copying an existing StockQuoteAvroModel instance.
+   * Creates a new StockQuoteAvroModel RecordBuilder by copying an existing StockQuoteAvroModel
+   * instance.
+   *
    * @param other The existing instance to copy.
    * @return A new StockQuoteAvroModel RecordBuilder
    */
@@ -326,13 +349,16 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
     private double high;
     private java.lang.Object lastUpdated;
 
-    /** Creates a new Builder */
+    /**
+     * Creates a new Builder
+     */
     private Builder() {
       super(SCHEMA$, MODEL$);
     }
 
     /**
      * Creates a Builder by copying an existing Builder.
+     *
      * @param other The existing Builder to copy.
      */
     private Builder(org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder other) {
@@ -365,6 +391,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Creates a Builder by copying an existing StockQuoteAvroModel instance
+     *
      * @param other The existing instance to copy.
      */
     private Builder(org.message.queue.kafka.model.avro.StockQuoteAvroModel other) {
@@ -397,6 +424,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Gets the value of the 'symbol' field.
+     *
      * @return The value.
      */
     public java.lang.String getSymbol() {
@@ -406,6 +434,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Sets the value of the 'symbol' field.
+     *
      * @param value The value of 'symbol'.
      * @return This builder.
      */
@@ -419,6 +448,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Checks whether the 'symbol' field has been set.
+     *
      * @return True if the 'symbol' field has been set, false otherwise.
      */
     public boolean hasSymbol() {
@@ -428,6 +458,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Clears the value of the 'symbol' field.
+     *
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearSymbol() {
@@ -438,6 +469,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Gets the value of the 'exchange' field.
+     *
      * @return The value.
      */
     public java.lang.String getExchange() {
@@ -447,6 +479,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Sets the value of the 'exchange' field.
+     *
      * @param value The value of 'exchange'.
      * @return This builder.
      */
@@ -460,6 +493,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Checks whether the 'exchange' field has been set.
+     *
      * @return True if the 'exchange' field has been set, false otherwise.
      */
     public boolean hasExchange() {
@@ -469,6 +503,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Clears the value of the 'exchange' field.
+     *
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearExchange() {
@@ -479,6 +514,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Gets the value of the 'currency' field.
+     *
      * @return The value.
      */
     public java.lang.String getCurrency() {
@@ -488,6 +524,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Sets the value of the 'currency' field.
+     *
      * @param value The value of 'currency'.
      * @return This builder.
      */
@@ -501,6 +538,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Checks whether the 'currency' field has been set.
+     *
      * @return True if the 'currency' field has been set, false otherwise.
      */
     public boolean hasCurrency() {
@@ -510,6 +548,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Clears the value of the 'currency' field.
+     *
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearCurrency() {
@@ -520,6 +559,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Gets the value of the 'low' field.
+     *
      * @return The value.
      */
     public double getLow() {
@@ -529,6 +569,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Sets the value of the 'low' field.
+     *
      * @param value The value of 'low'.
      * @return This builder.
      */
@@ -541,6 +582,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Checks whether the 'low' field has been set.
+     *
      * @return True if the 'low' field has been set, false otherwise.
      */
     public boolean hasLow() {
@@ -550,6 +592,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Clears the value of the 'low' field.
+     *
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearLow() {
@@ -559,6 +602,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Gets the value of the 'high' field.
+     *
      * @return The value.
      */
     public double getHigh() {
@@ -568,6 +612,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Sets the value of the 'high' field.
+     *
      * @param value The value of 'high'.
      * @return This builder.
      */
@@ -580,6 +625,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Checks whether the 'high' field has been set.
+     *
      * @return True if the 'high' field has been set, false otherwise.
      */
     public boolean hasHigh() {
@@ -589,6 +635,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Clears the value of the 'high' field.
+     *
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearHigh() {
@@ -598,6 +645,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Gets the value of the 'lastUpdated' field.
+     *
      * @return The value.
      */
     public java.lang.Object getLastUpdated() {
@@ -607,6 +655,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Sets the value of the 'lastUpdated' field.
+     *
      * @param value The value of 'lastUpdated'.
      * @return This builder.
      */
@@ -620,6 +669,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Checks whether the 'lastUpdated' field has been set.
+     *
      * @return True if the 'lastUpdated' field has been set, false otherwise.
      */
     public boolean hasLastUpdated() {
@@ -629,6 +679,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
 
     /**
      * Clears the value of the 'lastUpdated' field.
+     *
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearLastUpdated() {

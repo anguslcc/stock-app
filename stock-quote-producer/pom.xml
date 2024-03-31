@@ -18,7 +18,11 @@
     </dependency>
     <dependency>
       <groupId>org.message.queue</groupId>
-      <artifactId>message-queue-lib</artifactId>
+      <artifactId>kafka-producer</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.message.queue</groupId>
+      <artifactId>kafka-admin</artifactId>
     </dependency>
 
     <dependency>
