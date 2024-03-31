@@ -1,4 +1,4 @@
-package org.finance.messagequeue.kafka.config;
+package org.finance.messagequeue.kafka.admin.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package org.finance.messagequeue.kafka.config;
+package org.finance.common.config.kafka;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

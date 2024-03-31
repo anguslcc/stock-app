@@ -4,9 +4,9 @@ import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.CreateTopicsResult;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.admin.TopicListing;
-import org.finance.messagequeue.kafka.config.KafkaConfigData;
-import org.finance.messagequeue.kafka.config.RetryConfigData;
-import org.finance.messagequeue.kafka.exception.KafkaClientException;
+import org.finance.common.config.kafka.KafkaConfigData;
+import org.finance.common.config.retry.RetryConfigData;
+import org.finance.messagequeue.kafka.admin.exception.KafkaClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
@@ -30,15 +30,10 @@ public class KafkaAdminClient {
   private static final Logger LOG = LoggerFactory.getLogger(KafkaAdminClient.class);
 
   private final KafkaConfigData kafkaConfigData;
-
   private final RetryConfigData retryConfigData;
-
   private final AdminClient adminClient;
-
   private final RetryTemplate retryTemplate;
-
   private final WebClient webClient;
-
 
   public KafkaAdminClient(KafkaConfigData config,
       RetryConfigData retryConfigData,

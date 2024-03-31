@@ -1,8 +1,9 @@
-package org.finance.messagequeue.kafka.config;
+package org.finance.messagequeue.kafka.admin.config;
 
 import java.util.Map;
 import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.admin.AdminClient;
+import org.finance.common.config.kafka.KafkaConfigData;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

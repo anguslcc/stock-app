@@ -1,7 +1,9 @@
-package org.finance.messagequeue.kafka.config;
+package org.finance.messagequeue.kafka.producer.config;
 
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.finance.common.config.kafka.KafkaConfigData;
+import org.finance.common.config.kafka.KafkaProducerConfigData;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -16,7 +18,6 @@ import java.util.Map;
 public class KafkaProducerConfig<K extends Serializable, V extends SpecificRecordBase> {
 
   private final KafkaConfigData kafkaConfigData;
-
   private final KafkaProducerConfigData kafkaProducerConfigData;
 
   public KafkaProducerConfig(KafkaConfigData configData,

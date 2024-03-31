@@ -1,7 +1,7 @@
 package org.finance.stock.init.impl;
 
+import org.finance.common.config.kafka.KafkaConfigData;
 import org.finance.messagequeue.kafka.admin.KafkaAdminClient;
-import org.finance.messagequeue.kafka.config.KafkaConfigData;
 import org.finance.stock.init.StreamInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

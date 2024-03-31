@@ -43,11 +43,17 @@
     <module>stock-query-service</module>
     <module>message-queue-lib</module>
     <module>stock-quote-producer</module>
+    <module>common-config</module>
   </modules>
 
   <dependencyManagement>
     <dependencies>
       <!-- LOCAL -->
+      <dependency>
+        <groupId>org.finance</groupId>
+        <artifactId>common-config</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.finance</groupId>
         <artifactId>message-queue-lib</artifactId>
