@@ -1,4 +1,4 @@
-package org.finance.messagequeue.kafka.admin.config;
+package org.message.queue.kafka.admin.config;
 
 import java.util.Map;
 import org.apache.kafka.clients.CommonClientConfigs;

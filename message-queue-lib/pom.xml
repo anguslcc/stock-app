@@ -45,6 +45,7 @@
 
   </dependencies>
 
+  <groupId>org.message.queue</groupId>
   <artifactId>message-queue-lib</artifactId>
 
   <build>

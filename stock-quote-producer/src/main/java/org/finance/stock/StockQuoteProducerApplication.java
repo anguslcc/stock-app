@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "org.finance")
+@ComponentScan(basePackages = {"org.finance", "org.message.queue"})
 public class StockQuoteProducerApplication implements CommandLineRunner {
 
   private static final Logger LOG = LoggerFactory.getLogger(StockQuoteProducerApplication.class);
@@ -31,7 +31,7 @@ public class StockQuoteProducerApplication implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    LOG.info("App starts...");
+    LOG.info("Application starts...");
     streamInitializer.init();
     streamRunner.start();
 

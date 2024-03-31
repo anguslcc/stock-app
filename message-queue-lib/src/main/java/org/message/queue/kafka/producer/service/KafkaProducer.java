@@ -1,4 +1,4 @@
-package org.finance.messagequeue.kafka.producer.service;
+package org.message.queue.kafka.producer.service;
 
 import org.apache.avro.specific.SpecificRecordBase;
 

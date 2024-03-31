@@ -1,4 +1,4 @@
-package org.finance.messagequeue.kafka.admin.exception;
+package org.message.queue.kafka.admin.exception;
 
 public class KafkaClientException extends RuntimeException {
 

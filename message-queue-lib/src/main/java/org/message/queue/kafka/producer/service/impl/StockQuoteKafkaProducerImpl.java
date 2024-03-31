@@ -1,9 +1,9 @@
-package org.finance.messagequeue.kafka.producer.service.impl;
+package org.message.queue.kafka.producer.service.impl;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
-import org.finance.messagequeue.kafka.model.avro.StockQuoteAvroModel;
-import org.finance.messagequeue.kafka.producer.service.KafkaProducer;
+import org.message.queue.kafka.model.avro.StockQuoteAvroModel;
+import org.message.queue.kafka.producer.service.KafkaProducer;
 import org.springframework.stereotype.Service;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package org.finance.messagequeue.kafka.producer.config;
+package org.message.queue.kafka.producer.config;
 
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.producer.ProducerConfig;

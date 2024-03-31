@@ -1,5 +1,5 @@
 {
-  "namespace": "org.finance.messagequeue.kafka.model.avro",
+  "namespace": "org.message.queue.kafka.model.avro",
   "type": "record",
   "name": "StockQuoteAvroModel",
   "fields": [

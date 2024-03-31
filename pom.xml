@@ -55,7 +55,7 @@
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.finance</groupId>
+        <groupId>org.message.queue</groupId>
         <artifactId>message-queue-lib</artifactId>
         <version>${project.version}</version>
       </dependency>
