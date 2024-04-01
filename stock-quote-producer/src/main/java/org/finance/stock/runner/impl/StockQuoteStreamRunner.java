@@ -1,5 +1,7 @@
 package org.finance.stock.runner.impl;
 
+import java.text.DecimalFormat;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import org.finance.config.kafka.KafkaConfigData;
 import org.message.queue.kafka.model.avro.StockQuoteAvroModel;
@@ -33,16 +35,24 @@ public class StockQuoteStreamRunner implements StreamRunner {
 
   private void simulateStockQuoteStream() {
     Executors.newSingleThreadExecutor().submit(() -> {
+      Random rand = new Random();
       while (true) {
         LOG.info("Creating Stock Quote Start");
+        double high = 10.21;
+        double low = 7.21;
+        double bid = low + rand.nextDouble(high - low);
+        double offer = bid + 0.1;
+        DecimalFormat f = new DecimalFormat("##.00");
         StockQuoteAvroModel stockQuoteAvroModel = StockQuoteAvroModel
             .newBuilder()
             .setCurrency("USD")
             .setExchange("Nasdaq")
             .setSymbol("AAPL")
-            .setHigh(10.21)
-            .setLow(7.21)
-            .setLastUpdated(0L)
+            .setHigh(high)
+            .setLow(low)
+            .setBid(Double.parseDouble(f.format(bid)))
+            .setOffer(Double.parseDouble(f.format(offer)))
+            .setLastUpdated(System.currentTimeMillis())
             .build();
 
         LOG.info("Creating Stock Quote End");

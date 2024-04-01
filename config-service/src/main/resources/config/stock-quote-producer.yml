@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 5005
 
 retry-config:
   initial-interval-ms: 1000

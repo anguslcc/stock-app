@@ -1,0 +1,73 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.finance</groupId>
+    <artifactId>stock-app</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>stock-quote-consumer</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.finance</groupId>
+      <artifactId>app-config-data</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.message.queue</groupId>
+      <artifactId>kafka-consumer</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.message.queue</groupId>
+      <artifactId>kafka-admin</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.message.queue</groupId>
+      <artifactId>kafka-model</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-config</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.confluent</groupId>
+      <artifactId>kafka-avro-serializer</artifactId>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <profile>
+      <id>build-image</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.google.cloud.tools</groupId>
+            <artifactId>jib-maven-plugin</artifactId>
+            <version>3.4.1</version>
+            <configuration>
+              <to>
+                <image>${project.groupId}/${project.artifactId}:${project.version}</image>
+              </to>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>dockerBuild</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>

@@ -24,6 +24,14 @@
       "type": "double"
     },
     {
+      "name": "bid",
+      "type": "double"
+    },
+    {
+      "name": "offer",
+      "type": "double"
+    },
+    {
       "name": "lastUpdated",
       "type": [
         "long"

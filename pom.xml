@@ -44,6 +44,7 @@
     <module>stock-quote-producer</module>
     <module>app-config-data</module>
     <module>message-queue-lib</module>
+    <module>stock-quote-consumer</module>
   </modules>
 
   <dependencyManagement>
@@ -67,6 +68,11 @@
       <dependency>
         <groupId>org.message.queue</groupId>
         <artifactId>kafka-admin</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.message.queue</groupId>
+        <artifactId>kafka-consumer</artifactId>
         <version>${project.version}</version>
       </dependency>
 

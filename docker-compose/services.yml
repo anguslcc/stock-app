@@ -23,6 +23,30 @@ services:
       schema-registry:
         condition: service_healthy
 
+  stock-quote-consumer:
+    image: ${GROUP_ID}/stock-quote-consumer:${SERVICE_VERSION:-latest}
+    ports:
+      - "5006:5006"
+    depends_on:
+      config-service:
+        condition: service_healthy
+      kafka-broker-1:
+        condition: service_healthy
+      kafka-broker-2:
+        condition: service_healthy
+      kafka-broker-3:
+        condition: service_healthy
+      schema-registry:
+        condition: service_healthy
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -Xms128m -Xmx256m"
+      - "KAFKA-CONFIG_BOOTSTRAP-SERVERS=kafka-broker-1:9092, kafka-broker-2:9092, kafka-broker-3:9092"
+      - "KAFKA-CONFIG_SCHEMA-REGISTRY-URL=http://schema-registry:9000"
+      - "CONFIG_SERVER_URL=${CONFIG_SERVER_URL}"
+      - "SPRING_KAFKA_BOOTSTRAP-SERVERS=kafka-broker-1:9092, kafka-broker-2:9092, kafka-broker-3:9092"
+    networks:
+      - ${GLOBAL_NETWORK:-services}
+
   config-service:
     image: ${GROUP_ID}/config-service:${SERVICE_VERSION:-latest}
     hostname: localhost
