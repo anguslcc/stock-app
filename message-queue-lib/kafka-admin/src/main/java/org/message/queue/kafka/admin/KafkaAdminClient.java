@@ -38,12 +38,12 @@ public class KafkaAdminClient {
   public KafkaAdminClient(KafkaConfigData config,
       RetryConfigData retryConfigData,
       AdminClient client,
-      //RetryTemplate template,
+      RetryTemplate template,
       WebClient webClient) {
     this.kafkaConfigData = config;
     this.retryConfigData = retryConfigData;
     this.adminClient = client;
-    this.retryTemplate = new RetryTemplate();
+    this.retryTemplate = template;
     this.webClient = webClient;
   }
 

@@ -3,10 +3,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.message.queue</groupId>
-    <artifactId>message-queue-lib</artifactId>
+    <groupId>org.finance</groupId>
+    <artifactId>stock-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
+
+  <artifactId>common-config</artifactId>
 
   <dependencies>
     <dependency>
@@ -14,30 +16,18 @@
       <artifactId>app-config-data</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.finance</groupId>
-      <artifactId>common-config</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.message.queue</groupId>
-      <artifactId>kafka-model</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.kafka</groupId>
-      <artifactId>spring-kafka</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-webflux</artifactId>
+      <groupId>org.springframework.retry</groupId>
+      <artifactId>spring-retry</artifactId>
     </dependency>
-
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
+    </dependency>
   </dependencies>
-
-  <artifactId>kafka-admin</artifactId>
 
   <build>
     <plugins>

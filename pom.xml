@@ -45,6 +45,7 @@
     <module>app-config-data</module>
     <module>message-queue-lib</module>
     <module>stock-quote-consumer</module>
+    <module>common-config</module>
   </modules>
 
   <dependencyManagement>
@@ -53,6 +54,11 @@
       <dependency>
         <groupId>org.finance</groupId>
         <artifactId>app-config-data</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.finance</groupId>
+        <artifactId>common-config</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
