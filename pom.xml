@@ -42,7 +42,7 @@
     <module>gateway-service</module>
     <module>stock-query-service</module>
     <module>stock-quote-producer</module>
-    <module>common-config</module>
+    <module>app-config-data</module>
     <module>message-queue-lib</module>
   </modules>
 
@@ -51,7 +51,7 @@
       <!-- LOCAL -->
       <dependency>
         <groupId>org.finance</groupId>
-        <artifactId>common-config</artifactId>
+        <artifactId>app-config-data</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

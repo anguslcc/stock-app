@@ -1,7 +1,7 @@
 package org.finance.stock.runner.impl;
 
 import java.util.concurrent.Executors;
-import org.finance.common.config.kafka.KafkaConfigData;
+import org.finance.config.kafka.KafkaConfigData;
 import org.message.queue.kafka.model.avro.StockQuoteAvroModel;
 import org.message.queue.kafka.producer.service.KafkaProducer;
 import org.finance.stock.exception.StockQuoteProducerException;

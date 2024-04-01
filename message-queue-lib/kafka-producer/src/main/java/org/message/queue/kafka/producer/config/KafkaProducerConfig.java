@@ -2,8 +2,8 @@ package org.message.queue.kafka.producer.config;
 
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.finance.common.config.kafka.KafkaConfigData;
-import org.finance.common.config.kafka.KafkaProducerConfigData;
+import org.finance.config.kafka.KafkaConfigData;
+import org.finance.config.kafka.KafkaProducerConfigData;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;

@@ -1,4 +1,4 @@
-package org.finance.common.config.retry;
+package org.finance.config.retry;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

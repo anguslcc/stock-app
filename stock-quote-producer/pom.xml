@@ -14,7 +14,7 @@
   <dependencies>
     <dependency>
       <groupId>org.finance</groupId>
-      <artifactId>common-config</artifactId>
+      <artifactId>app-config-data</artifactId>
     </dependency>
     <dependency>
       <groupId>org.message.queue</groupId>
