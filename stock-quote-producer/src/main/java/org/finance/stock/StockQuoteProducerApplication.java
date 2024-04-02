@@ -32,6 +32,7 @@ public class StockQuoteProducerApplication implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     LOG.info("Application starts...");
+
     streamInitializer.init();
     streamRunner.start();
 

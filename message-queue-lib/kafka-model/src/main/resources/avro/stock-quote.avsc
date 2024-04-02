@@ -24,21 +24,20 @@
       "type": "double"
     },
     {
-      "name": "bid",
+      "name": "open",
       "type": "double"
     },
     {
-      "name": "offer",
+      "name": "close",
       "type": "double"
     },
     {
-      "name": "lastUpdated",
-      "type": [
-        "long"
-      ],
-      "logicalType": [
-        "timestamp-millis"
-      ]
+      "name": "volume",
+      "type": "int"
+    },
+    {
+      "name": "datetime",
+      "type": "long"
     }
   ]
 }

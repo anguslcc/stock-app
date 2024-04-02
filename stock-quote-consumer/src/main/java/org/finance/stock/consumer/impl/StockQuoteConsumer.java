@@ -1,7 +1,10 @@
 package org.finance.stock.consumer.impl;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.TimeZone;
 import org.finance.config.kafka.KafkaConfigData;
 import org.finance.config.kafka.KafkaConsumerConfigData;
 import org.finance.stock.consumer.KafkaConsumer;
@@ -61,14 +64,17 @@ public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
         Thread.currentThread().getId());
 
     for (StockQuoteAvroModel message : messages) {
-      LOG.info("Symbol: {}, Currency: {}, High: {}, Low: {}, Bid: {}, Offer: {}, LastUpdate: {} ",
+      LOG.info(
+          "Symbol: {}, Currency: {}, High: {}, Low: {}, Open: {}, Close: {}, Volume: {}, DateTime: {} ",
           message.getSymbol(),
           message.getCurrency(),
           message.getHigh(),
           message.getLow(),
-          message.getBid(),
-          message.getOffer(),
-          message.getLastUpdated());
+          message.getOpen(),
+          message.getClose(),
+          message.getVolume(),
+          LocalDateTime.ofInstant(Instant.ofEpochMilli(message.getDatetime()),
+              TimeZone.getDefault().toZoneId()));
     }
 
   }

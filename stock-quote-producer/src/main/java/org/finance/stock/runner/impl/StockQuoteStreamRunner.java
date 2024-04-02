@@ -1,9 +1,13 @@
 package org.finance.stock.runner.impl;
 
-import java.text.DecimalFormat;
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import org.finance.config.kafka.KafkaConfigData;
+import org.finance.config.stock.StockQuoteProducerConfigData;
+import org.finance.stock.external.payload.MarketDataResponse;
+import org.finance.stock.external.service.MarketDataService;
+import org.finance.stock.transformer.MarketDataToAvroTransformer;
 import org.message.queue.kafka.model.avro.StockQuoteAvroModel;
 import org.message.queue.kafka.producer.service.KafkaProducer;
 import org.finance.stock.exception.StockQuoteProducerException;
@@ -19,54 +23,56 @@ public class StockQuoteStreamRunner implements StreamRunner {
 
   private final KafkaConfigData kafkaConfigData;
 
+  private final StockQuoteProducerConfigData stockQuoteProducerConfigData;
+
   private final KafkaProducer<Long, StockQuoteAvroModel> kafkaProducer;
 
+  private final MarketDataService marketDataService;
+
   public StockQuoteStreamRunner(KafkaConfigData kafkaConfigData,
-      KafkaProducer<Long, StockQuoteAvroModel> kafkaProducer) {
+      StockQuoteProducerConfigData stockQuoteProducerConfigData,
+      KafkaProducer<Long, StockQuoteAvroModel> kafkaProducer,
+      MarketDataService marketDataService) {
     this.kafkaConfigData = kafkaConfigData;
+    this.stockQuoteProducerConfigData = stockQuoteProducerConfigData;
     this.kafkaProducer = kafkaProducer;
+    this.marketDataService = marketDataService;
   }
 
   @Override
   public void start() throws StockQuoteProducerException {
-    LOG.info("Start sending Quote to Kafka");
-    simulateStockQuoteStream();
+    LOG.info("Start sending Stock Quote to Kafka");
+    startStockQuoteStream();
   }
 
-  private void simulateStockQuoteStream() {
+  private void startStockQuoteStream() {
     Executors.newSingleThreadExecutor().submit(() -> {
-      Random rand = new Random();
+      long counter = 1L;
       while (true) {
         LOG.info("Creating Stock Quote Start");
-        double high = 10.21;
-        double low = 7.21;
-        double bid = low + rand.nextDouble(high - low);
-        double offer = bid + 0.1;
-        DecimalFormat f = new DecimalFormat("##.00");
-        StockQuoteAvroModel stockQuoteAvroModel = StockQuoteAvroModel
-            .newBuilder()
-            .setCurrency("USD")
-            .setExchange("Nasdaq")
-            .setSymbol("AAPL")
-            .setHigh(high)
-            .setLow(low)
-            .setBid(Double.parseDouble(f.format(bid)))
-            .setOffer(Double.parseDouble(f.format(offer)))
-            .setLastUpdated(System.currentTimeMillis())
-            .build();
+        List<MarketDataResponse> marketDataResponseList = marketDataService.getMarketData();
+        List<StockQuoteAvroModel> stockQuoteAvroModelList = new ArrayList<>();
+        for (MarketDataResponse marketDataResponse : marketDataResponseList) {
+          stockQuoteAvroModelList.addAll(MarketDataToAvroTransformer.from(marketDataResponse));
+        }
 
-        LOG.info("Creating Stock Quote End");
-        kafkaProducer.send(kafkaConfigData.getTopicName(), 1234L, stockQuoteAvroModel);
-        LOG.info("Sending Stock Quote to Kafka End");
-        sleep(5000);
+        for (StockQuoteAvroModel stockQuoteAvroModel : stockQuoteAvroModelList) {
+          kafkaProducer.send(kafkaConfigData.getTopicName(), counter++, stockQuoteAvroModel);
+        }
+
+        LOG.info("Sent Stock Quote to Kafka");
+        sleep(stockQuoteProducerConfigData.getSleepTime());
       }
     });
+
   }
 
   private void sleep(long sleepTimeMs) {
     try {
+      LOG.info("Sleep for {} ms", sleepTimeMs);
       Thread.sleep(sleepTimeMs);
     } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
       throw new StockQuoteProducerException(
           "Error while sleeping for waiting stock quote data to create!!");
     }

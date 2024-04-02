@@ -33,6 +33,7 @@
     <spring-retry.version>2.0.5</spring-retry.version>
     <spring-aspects.version>6.1.5</spring-aspects.version>
     <jib-maven-plugin-version>3.4.1</jib-maven-plugin-version>
+    <jackson-module-version>2.17.0</jackson-module-version>
   </properties>
 
 
@@ -108,6 +109,11 @@
         <groupId>org.springframework</groupId>
         <artifactId>spring-aspects</artifactId>
         <version>${spring-aspects.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.module</groupId>
+        <artifactId>jackson-module-jsonSchema</artifactId>
+        <version>${jackson-module-version}</version>
       </dependency>
       <dependency>
         <groupId>io.confluent</groupId>
