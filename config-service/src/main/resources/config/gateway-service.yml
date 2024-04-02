@@ -20,12 +20,12 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: stock-query-service
-          uri: lb://stock-query-service
+        - id: stock-data-service
+          uri: lb://stock-data-service
           predicates:
-            - Path=/stock-query/**
+            - Path=/stock-data/**
           filters:
-            - RewritePath=/stock-query/(?<path>.*), /$\{path}
+            - RewritePath=/stock-data/(?<path>.*), /$\{path}
 
 
 management:

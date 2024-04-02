@@ -33,6 +33,10 @@
     <spring-retry.version>2.0.5</spring-retry.version>
     <spring-aspects.version>6.1.5</spring-aspects.version>
     <jib-maven-plugin-version>3.4.1</jib-maven-plugin-version>
+    <jib-maven-plugin.image>
+      eclipse-temurin:17-jre-focal@sha256:b8948181ccbda7928a6c5a1dc2e36e41f43bcb176fb958ae99a7c71d647df0f4
+    </jib-maven-plugin.image>
+    <jib-base-path>org.finance.stockapp</jib-base-path>
     <jackson-module-version>2.17.0</jackson-module-version>
   </properties>
 
@@ -41,7 +45,7 @@
     <module>config-service</module>
     <module>discovery-service</module>
     <module>gateway-service</module>
-    <module>stock-query-service</module>
+    <module>stock-data-service</module>
     <module>stock-quote-producer</module>
     <module>app-config-data</module>
     <module>message-queue-lib</module>
