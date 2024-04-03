@@ -1,4 +1,4 @@
-package org.finance.config;
+package org.finance.common.config;
 
 import org.finance.config.retry.RetryConfigData;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +17,7 @@ public class RetryConfig {
   }
 
   @Bean
-  public RetryTemplate retryTemplate() {
+  public RetryTemplate getRetryTemplate() {
     RetryTemplate retryTemplate = new RetryTemplate();
 
     ExponentialBackOffPolicy exponentialBackOffPolicy = new ExponentialBackOffPolicy();
