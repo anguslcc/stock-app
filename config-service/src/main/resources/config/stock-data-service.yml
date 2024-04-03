@@ -19,6 +19,17 @@ spring:
   output:
     ansi:
       enabled: always
+  datasource:
+    url: jdbc:postgresql://${DATABASE_SERVICE:localhost}:5432/market-db
+    username: admin
+    password: password
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
 
 management:
   tracing:

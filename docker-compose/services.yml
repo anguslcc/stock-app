@@ -88,10 +88,13 @@ services:
         condition: service_healthy
       config-service:
         condition: service_healthy
+      postgres:
+        condition: service_healthy
     environment:
       - "CONFIG_SERVER_URL=${CONFIG_SERVER_URL}"
       - "DISCOVERY_SERVER_URL=${DISCOVERY_SERVER_URL}"
       - "SERVICE_NAME=stock-data-service"
+      - "DATABASE_SERVICE=postgres"
     healthcheck:
       test: [ "CMD", "curl", "-f", "stock-data-service:8100/actuator/health" ]
       start_period: 10s

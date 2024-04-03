@@ -1,17 +1,22 @@
 version: "3.7"
-volumes:
-  postgres:
+#volumes:
+#  postgres:
 
 services:
   postgres:
     image: postgres:16.2-alpine
     ports:
       - 5432:5432
-    volumes:
-      - postgres:/var/lib/postgresql/data
+    #volumes:
+    #  - postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=admin
-      - POSTGRES_DB=testdb
+      - POSTGRES_DB=market-db
     networks:
-      - ${GLOBAL_NETWORK:-postgres}          
+      - ${GLOBAL_NETWORK:-postgres}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -q -d market-db" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10      
