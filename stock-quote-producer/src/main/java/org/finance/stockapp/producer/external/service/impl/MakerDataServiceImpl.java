@@ -35,6 +35,7 @@ public class MakerDataServiceImpl implements MarketDataService {
 
     for (String symbol : twelveConfigData.getSymbols()) {
       parameterMap.put("symbol", symbol);
+
       ResponseEntity<MarketDataResponse> response = restTemplate.getForEntity(
           twelveConfigData.getUrl(),
           MarketDataResponse.class,

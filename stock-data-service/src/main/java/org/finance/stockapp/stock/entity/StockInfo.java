@@ -9,6 +9,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
 import java.util.Objects;
+import org.finance.common.payload.StockDataRequest;
 
 @Entity
 @Table(name = "stock_info")
@@ -82,5 +83,15 @@ public class StockInfo {
   @Override
   public int hashCode() {
     return Objects.hash(id);
+  }
+
+  public static StockInfo valueOf(StockDataRequest stockDataRequest) {
+    StockInfo stockInfo = new StockInfo();
+
+    stockInfo.symbol = stockDataRequest.getSymbol();
+    stockInfo.currency = stockDataRequest.getCurrency();
+    stockInfo.exchange = stockDataRequest.getExchange();
+
+    return stockInfo;
   }
 }
