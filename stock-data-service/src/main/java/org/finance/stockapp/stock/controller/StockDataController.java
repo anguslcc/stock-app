@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
 
 @CrossOrigin
 @RestController
@@ -35,23 +34,4 @@ public class StockDataController {
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
-  @GetMapping("/save-stock-data")
-  public ResponseEntity<Void> testSaveStockData() {
-    StockDataRequest stockDataRequest = StockDataRequest
-        .newBuilder()
-        .setSymbol("AAPL")
-        .setCurrency("USD")
-        .setExchange("NASDAQ")
-        .setInterval("1min")
-        .setEndTime(LocalDateTime.now())
-        .setLow(5.67)
-        .setHigh(8.12)
-        .setOpen(5.8)
-        .setClose(7.1)
-        .setVolume(3001)
-        .build();
-
-    stockDataService.saveStockData(stockDataRequest);
-    return ResponseEntity.status(HttpStatus.CREATED).build();
-  }
 }

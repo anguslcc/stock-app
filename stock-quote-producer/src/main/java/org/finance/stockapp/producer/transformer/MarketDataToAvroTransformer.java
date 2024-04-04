@@ -25,6 +25,7 @@ public class MarketDataToAvroTransformer {
       stockQuoteAvroModelList.add(StockQuoteAvroModel
           .newBuilder()
           .setSymbol(metaData.getSymbol())
+          .setInterval(metaData.getInterval())
           .setExchange(metaData.getExchange())
           .setCurrency(metaData.getCurrency())
           .setLow(priceData.getLow())

@@ -8,6 +8,10 @@
       "type": "string"
     },
     {
+      "name": "interval",
+      "type": "string"
+    },
+    {
       "name": "exchange",
       "type": "string"
     },

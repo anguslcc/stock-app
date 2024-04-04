@@ -16,11 +16,11 @@ import org.apache.avro.message.SchemaStore;
 public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecordBase implements
     org.apache.avro.specific.SpecificRecord {
 
-  private static final long serialVersionUID = 658534804218069373L;
+  private static final long serialVersionUID = -7878478904851355555L;
 
 
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse(
-      "{\"type\":\"record\",\"name\":\"StockQuoteAvroModel\",\"namespace\":\"org.message.queue.kafka.model.avro\",\"fields\":[{\"name\":\"symbol\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"exchange\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"currency\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"low\",\"type\":\"double\"},{\"name\":\"high\",\"type\":\"double\"},{\"name\":\"open\",\"type\":\"double\"},{\"name\":\"close\",\"type\":\"double\"},{\"name\":\"volume\",\"type\":\"int\"},{\"name\":\"datetime\",\"type\":\"long\"}]}");
+      "{\"type\":\"record\",\"name\":\"StockQuoteAvroModel\",\"namespace\":\"org.message.queue.kafka.model.avro\",\"fields\":[{\"name\":\"symbol\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"interval\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"exchange\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"currency\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"low\",\"type\":\"double\"},{\"name\":\"high\",\"type\":\"double\"},{\"name\":\"open\",\"type\":\"double\"},{\"name\":\"close\",\"type\":\"double\"},{\"name\":\"volume\",\"type\":\"int\"},{\"name\":\"datetime\",\"type\":\"long\"}]}");
 
   public static org.apache.avro.Schema getClassSchema() {
     return SCHEMA$;
@@ -87,6 +87,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
   }
 
   private java.lang.String symbol;
+  private java.lang.String interval;
   private java.lang.String exchange;
   private java.lang.String currency;
   private double low;
@@ -107,6 +108,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
    * All-args constructor.
    *
    * @param symbol   The new value for symbol
+   * @param interval The new value for interval
    * @param exchange The new value for exchange
    * @param currency The new value for currency
    * @param low      The new value for low
@@ -116,10 +118,12 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
    * @param volume   The new value for volume
    * @param datetime The new value for datetime
    */
-  public StockQuoteAvroModel(java.lang.String symbol, java.lang.String exchange,
-      java.lang.String currency, java.lang.Double low, java.lang.Double high, java.lang.Double open,
-      java.lang.Double close, java.lang.Integer volume, java.lang.Long datetime) {
+  public StockQuoteAvroModel(java.lang.String symbol, java.lang.String interval,
+      java.lang.String exchange, java.lang.String currency, java.lang.Double low,
+      java.lang.Double high, java.lang.Double open, java.lang.Double close,
+      java.lang.Integer volume, java.lang.Long datetime) {
     this.symbol = symbol;
+    this.interval = interval;
     this.exchange = exchange;
     this.currency = currency;
     this.low = low;
@@ -147,20 +151,22 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
       case 0:
         return symbol;
       case 1:
-        return exchange;
+        return interval;
       case 2:
-        return currency;
+        return exchange;
       case 3:
-        return low;
+        return currency;
       case 4:
-        return high;
+        return low;
       case 5:
-        return open;
+        return high;
       case 6:
-        return close;
+        return open;
       case 7:
-        return volume;
+        return close;
       case 8:
+        return volume;
+      case 9:
         return datetime;
       default:
         throw new IndexOutOfBoundsException("Invalid index: " + field$);
@@ -176,27 +182,30 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
         symbol = value$ != null ? value$.toString() : null;
         break;
       case 1:
-        exchange = value$ != null ? value$.toString() : null;
+        interval = value$ != null ? value$.toString() : null;
         break;
       case 2:
-        currency = value$ != null ? value$.toString() : null;
+        exchange = value$ != null ? value$.toString() : null;
         break;
       case 3:
-        low = (java.lang.Double) value$;
+        currency = value$ != null ? value$.toString() : null;
         break;
       case 4:
-        high = (java.lang.Double) value$;
+        low = (java.lang.Double) value$;
         break;
       case 5:
-        open = (java.lang.Double) value$;
+        high = (java.lang.Double) value$;
         break;
       case 6:
-        close = (java.lang.Double) value$;
+        open = (java.lang.Double) value$;
         break;
       case 7:
-        volume = (java.lang.Integer) value$;
+        close = (java.lang.Double) value$;
         break;
       case 8:
+        volume = (java.lang.Integer) value$;
+        break;
+      case 9:
         datetime = (java.lang.Long) value$;
         break;
       default:
@@ -221,6 +230,25 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
    */
   public void setSymbol(java.lang.String value) {
     this.symbol = value;
+  }
+
+  /**
+   * Gets the value of the 'interval' field.
+   *
+   * @return The value of the 'interval' field.
+   */
+  public java.lang.String getInterval() {
+    return interval;
+  }
+
+
+  /**
+   * Sets the value of the 'interval' field.
+   *
+   * @param value the value to set.
+   */
+  public void setInterval(java.lang.String value) {
+    this.interval = value;
   }
 
   /**
@@ -424,6 +452,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
       implements org.apache.avro.data.RecordBuilder<StockQuoteAvroModel> {
 
     private java.lang.String symbol;
+    private java.lang.String interval;
     private java.lang.String exchange;
     private java.lang.String currency;
     private double low;
@@ -451,37 +480,41 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
         this.symbol = data().deepCopy(fields()[0].schema(), other.symbol);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
-      if (isValidValue(fields()[1], other.exchange)) {
-        this.exchange = data().deepCopy(fields()[1].schema(), other.exchange);
+      if (isValidValue(fields()[1], other.interval)) {
+        this.interval = data().deepCopy(fields()[1].schema(), other.interval);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
-      if (isValidValue(fields()[2], other.currency)) {
-        this.currency = data().deepCopy(fields()[2].schema(), other.currency);
+      if (isValidValue(fields()[2], other.exchange)) {
+        this.exchange = data().deepCopy(fields()[2].schema(), other.exchange);
         fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
-      if (isValidValue(fields()[3], other.low)) {
-        this.low = data().deepCopy(fields()[3].schema(), other.low);
+      if (isValidValue(fields()[3], other.currency)) {
+        this.currency = data().deepCopy(fields()[3].schema(), other.currency);
         fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
-      if (isValidValue(fields()[4], other.high)) {
-        this.high = data().deepCopy(fields()[4].schema(), other.high);
+      if (isValidValue(fields()[4], other.low)) {
+        this.low = data().deepCopy(fields()[4].schema(), other.low);
         fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
-      if (isValidValue(fields()[5], other.open)) {
-        this.open = data().deepCopy(fields()[5].schema(), other.open);
+      if (isValidValue(fields()[5], other.high)) {
+        this.high = data().deepCopy(fields()[5].schema(), other.high);
         fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
-      if (isValidValue(fields()[6], other.close)) {
-        this.close = data().deepCopy(fields()[6].schema(), other.close);
+      if (isValidValue(fields()[6], other.open)) {
+        this.open = data().deepCopy(fields()[6].schema(), other.open);
         fieldSetFlags()[6] = other.fieldSetFlags()[6];
       }
-      if (isValidValue(fields()[7], other.volume)) {
-        this.volume = data().deepCopy(fields()[7].schema(), other.volume);
+      if (isValidValue(fields()[7], other.close)) {
+        this.close = data().deepCopy(fields()[7].schema(), other.close);
         fieldSetFlags()[7] = other.fieldSetFlags()[7];
       }
-      if (isValidValue(fields()[8], other.datetime)) {
-        this.datetime = data().deepCopy(fields()[8].schema(), other.datetime);
+      if (isValidValue(fields()[8], other.volume)) {
+        this.volume = data().deepCopy(fields()[8].schema(), other.volume);
         fieldSetFlags()[8] = other.fieldSetFlags()[8];
+      }
+      if (isValidValue(fields()[9], other.datetime)) {
+        this.datetime = data().deepCopy(fields()[9].schema(), other.datetime);
+        fieldSetFlags()[9] = other.fieldSetFlags()[9];
       }
     }
 
@@ -496,37 +529,41 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
         this.symbol = data().deepCopy(fields()[0].schema(), other.symbol);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.exchange)) {
-        this.exchange = data().deepCopy(fields()[1].schema(), other.exchange);
+      if (isValidValue(fields()[1], other.interval)) {
+        this.interval = data().deepCopy(fields()[1].schema(), other.interval);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.currency)) {
-        this.currency = data().deepCopy(fields()[2].schema(), other.currency);
+      if (isValidValue(fields()[2], other.exchange)) {
+        this.exchange = data().deepCopy(fields()[2].schema(), other.exchange);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.low)) {
-        this.low = data().deepCopy(fields()[3].schema(), other.low);
+      if (isValidValue(fields()[3], other.currency)) {
+        this.currency = data().deepCopy(fields()[3].schema(), other.currency);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.high)) {
-        this.high = data().deepCopy(fields()[4].schema(), other.high);
+      if (isValidValue(fields()[4], other.low)) {
+        this.low = data().deepCopy(fields()[4].schema(), other.low);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.open)) {
-        this.open = data().deepCopy(fields()[5].schema(), other.open);
+      if (isValidValue(fields()[5], other.high)) {
+        this.high = data().deepCopy(fields()[5].schema(), other.high);
         fieldSetFlags()[5] = true;
       }
-      if (isValidValue(fields()[6], other.close)) {
-        this.close = data().deepCopy(fields()[6].schema(), other.close);
+      if (isValidValue(fields()[6], other.open)) {
+        this.open = data().deepCopy(fields()[6].schema(), other.open);
         fieldSetFlags()[6] = true;
       }
-      if (isValidValue(fields()[7], other.volume)) {
-        this.volume = data().deepCopy(fields()[7].schema(), other.volume);
+      if (isValidValue(fields()[7], other.close)) {
+        this.close = data().deepCopy(fields()[7].schema(), other.close);
         fieldSetFlags()[7] = true;
       }
-      if (isValidValue(fields()[8], other.datetime)) {
-        this.datetime = data().deepCopy(fields()[8].schema(), other.datetime);
+      if (isValidValue(fields()[8], other.volume)) {
+        this.volume = data().deepCopy(fields()[8].schema(), other.volume);
         fieldSetFlags()[8] = true;
+      }
+      if (isValidValue(fields()[9], other.datetime)) {
+        this.datetime = data().deepCopy(fields()[9].schema(), other.datetime);
+        fieldSetFlags()[9] = true;
       }
     }
 
@@ -576,6 +613,51 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
     }
 
     /**
+     * Gets the value of the 'interval' field.
+     *
+     * @return The value.
+     */
+    public java.lang.String getInterval() {
+      return interval;
+    }
+
+
+    /**
+     * Sets the value of the 'interval' field.
+     *
+     * @param value The value of 'interval'.
+     * @return This builder.
+     */
+    public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder setInterval(
+        java.lang.String value) {
+      validate(fields()[1], value);
+      this.interval = value;
+      fieldSetFlags()[1] = true;
+      return this;
+    }
+
+    /**
+     * Checks whether the 'interval' field has been set.
+     *
+     * @return True if the 'interval' field has been set, false otherwise.
+     */
+    public boolean hasInterval() {
+      return fieldSetFlags()[1];
+    }
+
+
+    /**
+     * Clears the value of the 'interval' field.
+     *
+     * @return This builder.
+     */
+    public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearInterval() {
+      interval = null;
+      fieldSetFlags()[1] = false;
+      return this;
+    }
+
+    /**
      * Gets the value of the 'exchange' field.
      *
      * @return The value.
@@ -593,9 +675,9 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder setExchange(
         java.lang.String value) {
-      validate(fields()[1], value);
+      validate(fields()[2], value);
       this.exchange = value;
-      fieldSetFlags()[1] = true;
+      fieldSetFlags()[2] = true;
       return this;
     }
 
@@ -605,7 +687,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return True if the 'exchange' field has been set, false otherwise.
      */
     public boolean hasExchange() {
-      return fieldSetFlags()[1];
+      return fieldSetFlags()[2];
     }
 
 
@@ -616,7 +698,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearExchange() {
       exchange = null;
-      fieldSetFlags()[1] = false;
+      fieldSetFlags()[2] = false;
       return this;
     }
 
@@ -638,9 +720,9 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder setCurrency(
         java.lang.String value) {
-      validate(fields()[2], value);
+      validate(fields()[3], value);
       this.currency = value;
-      fieldSetFlags()[2] = true;
+      fieldSetFlags()[3] = true;
       return this;
     }
 
@@ -650,7 +732,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return True if the 'currency' field has been set, false otherwise.
      */
     public boolean hasCurrency() {
-      return fieldSetFlags()[2];
+      return fieldSetFlags()[3];
     }
 
 
@@ -661,7 +743,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearCurrency() {
       currency = null;
-      fieldSetFlags()[2] = false;
+      fieldSetFlags()[3] = false;
       return this;
     }
 
@@ -682,9 +764,9 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder setLow(double value) {
-      validate(fields()[3], value);
+      validate(fields()[4], value);
       this.low = value;
-      fieldSetFlags()[3] = true;
+      fieldSetFlags()[4] = true;
       return this;
     }
 
@@ -694,7 +776,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return True if the 'low' field has been set, false otherwise.
      */
     public boolean hasLow() {
-      return fieldSetFlags()[3];
+      return fieldSetFlags()[4];
     }
 
 
@@ -704,7 +786,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearLow() {
-      fieldSetFlags()[3] = false;
+      fieldSetFlags()[4] = false;
       return this;
     }
 
@@ -725,9 +807,9 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder setHigh(double value) {
-      validate(fields()[4], value);
+      validate(fields()[5], value);
       this.high = value;
-      fieldSetFlags()[4] = true;
+      fieldSetFlags()[5] = true;
       return this;
     }
 
@@ -737,7 +819,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return True if the 'high' field has been set, false otherwise.
      */
     public boolean hasHigh() {
-      return fieldSetFlags()[4];
+      return fieldSetFlags()[5];
     }
 
 
@@ -747,7 +829,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearHigh() {
-      fieldSetFlags()[4] = false;
+      fieldSetFlags()[5] = false;
       return this;
     }
 
@@ -768,9 +850,9 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder setOpen(double value) {
-      validate(fields()[5], value);
+      validate(fields()[6], value);
       this.open = value;
-      fieldSetFlags()[5] = true;
+      fieldSetFlags()[6] = true;
       return this;
     }
 
@@ -780,7 +862,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return True if the 'open' field has been set, false otherwise.
      */
     public boolean hasOpen() {
-      return fieldSetFlags()[5];
+      return fieldSetFlags()[6];
     }
 
 
@@ -790,7 +872,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearOpen() {
-      fieldSetFlags()[5] = false;
+      fieldSetFlags()[6] = false;
       return this;
     }
 
@@ -811,9 +893,9 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder setClose(double value) {
-      validate(fields()[6], value);
+      validate(fields()[7], value);
       this.close = value;
-      fieldSetFlags()[6] = true;
+      fieldSetFlags()[7] = true;
       return this;
     }
 
@@ -823,7 +905,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return True if the 'close' field has been set, false otherwise.
      */
     public boolean hasClose() {
-      return fieldSetFlags()[6];
+      return fieldSetFlags()[7];
     }
 
 
@@ -833,7 +915,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearClose() {
-      fieldSetFlags()[6] = false;
+      fieldSetFlags()[7] = false;
       return this;
     }
 
@@ -854,9 +936,9 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder setVolume(int value) {
-      validate(fields()[7], value);
+      validate(fields()[8], value);
       this.volume = value;
-      fieldSetFlags()[7] = true;
+      fieldSetFlags()[8] = true;
       return this;
     }
 
@@ -866,7 +948,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return True if the 'volume' field has been set, false otherwise.
      */
     public boolean hasVolume() {
-      return fieldSetFlags()[7];
+      return fieldSetFlags()[8];
     }
 
 
@@ -876,7 +958,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearVolume() {
-      fieldSetFlags()[7] = false;
+      fieldSetFlags()[8] = false;
       return this;
     }
 
@@ -897,9 +979,9 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder setDatetime(long value) {
-      validate(fields()[8], value);
+      validate(fields()[9], value);
       this.datetime = value;
-      fieldSetFlags()[8] = true;
+      fieldSetFlags()[9] = true;
       return this;
     }
 
@@ -909,7 +991,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return True if the 'datetime' field has been set, false otherwise.
      */
     public boolean hasDatetime() {
-      return fieldSetFlags()[8];
+      return fieldSetFlags()[9];
     }
 
 
@@ -919,7 +1001,7 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
      * @return This builder.
      */
     public org.message.queue.kafka.model.avro.StockQuoteAvroModel.Builder clearDatetime() {
-      fieldSetFlags()[8] = false;
+      fieldSetFlags()[9] = false;
       return this;
     }
 
@@ -930,19 +1012,21 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
         StockQuoteAvroModel record = new StockQuoteAvroModel();
         record.symbol =
             fieldSetFlags()[0] ? this.symbol : (java.lang.String) defaultValue(fields()[0]);
+        record.interval =
+            fieldSetFlags()[1] ? this.interval : (java.lang.String) defaultValue(fields()[1]);
         record.exchange =
-            fieldSetFlags()[1] ? this.exchange : (java.lang.String) defaultValue(fields()[1]);
+            fieldSetFlags()[2] ? this.exchange : (java.lang.String) defaultValue(fields()[2]);
         record.currency =
-            fieldSetFlags()[2] ? this.currency : (java.lang.String) defaultValue(fields()[2]);
-        record.low = fieldSetFlags()[3] ? this.low : (java.lang.Double) defaultValue(fields()[3]);
-        record.high = fieldSetFlags()[4] ? this.high : (java.lang.Double) defaultValue(fields()[4]);
-        record.open = fieldSetFlags()[5] ? this.open : (java.lang.Double) defaultValue(fields()[5]);
+            fieldSetFlags()[3] ? this.currency : (java.lang.String) defaultValue(fields()[3]);
+        record.low = fieldSetFlags()[4] ? this.low : (java.lang.Double) defaultValue(fields()[4]);
+        record.high = fieldSetFlags()[5] ? this.high : (java.lang.Double) defaultValue(fields()[5]);
+        record.open = fieldSetFlags()[6] ? this.open : (java.lang.Double) defaultValue(fields()[6]);
         record.close =
-            fieldSetFlags()[6] ? this.close : (java.lang.Double) defaultValue(fields()[6]);
+            fieldSetFlags()[7] ? this.close : (java.lang.Double) defaultValue(fields()[7]);
         record.volume =
-            fieldSetFlags()[7] ? this.volume : (java.lang.Integer) defaultValue(fields()[7]);
+            fieldSetFlags()[8] ? this.volume : (java.lang.Integer) defaultValue(fields()[8]);
         record.datetime =
-            fieldSetFlags()[8] ? this.datetime : (java.lang.Long) defaultValue(fields()[8]);
+            fieldSetFlags()[9] ? this.datetime : (java.lang.Long) defaultValue(fields()[9]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -984,6 +1068,8 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
       throws java.io.IOException {
     out.writeString(this.symbol);
 
+    out.writeString(this.interval);
+
     out.writeString(this.exchange);
 
     out.writeString(this.currency);
@@ -1009,6 +1095,8 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
     if (fieldOrder == null) {
       this.symbol = in.readString();
 
+      this.interval = in.readString();
+
       this.exchange = in.readString();
 
       this.currency = in.readString();
@@ -1026,41 +1114,45 @@ public class StockQuoteAvroModel extends org.apache.avro.specific.SpecificRecord
       this.datetime = in.readLong();
 
     } else {
-      for (int i = 0; i < 9; i++) {
+      for (int i = 0; i < 10; i++) {
         switch (fieldOrder[i].pos()) {
           case 0:
             this.symbol = in.readString();
             break;
 
           case 1:
-            this.exchange = in.readString();
+            this.interval = in.readString();
             break;
 
           case 2:
-            this.currency = in.readString();
+            this.exchange = in.readString();
             break;
 
           case 3:
-            this.low = in.readDouble();
+            this.currency = in.readString();
             break;
 
           case 4:
-            this.high = in.readDouble();
+            this.low = in.readDouble();
             break;
 
           case 5:
-            this.open = in.readDouble();
+            this.high = in.readDouble();
             break;
 
           case 6:
-            this.close = in.readDouble();
+            this.open = in.readDouble();
             break;
 
           case 7:
-            this.volume = in.readInt();
+            this.close = in.readDouble();
             break;
 
           case 8:
+            this.volume = in.readInt();
+            break;
+
+          case 9:
             this.datetime = in.readLong();
             break;
 

@@ -44,6 +44,7 @@ services:
       - "KAFKA-CONFIG_SCHEMA-REGISTRY-URL=http://schema-registry:9000"
       - "CONFIG_SERVER_URL=${CONFIG_SERVER_URL}"
       - "SPRING_KAFKA_BOOTSTRAP-SERVERS=kafka-broker-1:9092, kafka-broker-2:9092, kafka-broker-3:9092"
+      - "GATEWAY_SERVER_URL=${GATEWAY_SERVER_URL}"
     networks:
       - ${GLOBAL_NETWORK:-services}
 

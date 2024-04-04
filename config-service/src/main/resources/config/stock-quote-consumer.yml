@@ -33,3 +33,6 @@ retry-config:
   multiplier: 2.0
   maxAttempts: 3
   sleep-time-ms: 2000
+
+microservice-config:
+  base-url: ${GATEWAY_SERVER_URL:http://localhost:8060}
