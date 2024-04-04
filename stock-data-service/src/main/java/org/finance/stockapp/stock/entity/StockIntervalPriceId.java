@@ -1,21 +1,22 @@
 package org.finance.stockapp.stock.entity;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Embeddable
 public class StockIntervalPriceId implements Serializable {
 
   @Column(name = "stock_id")
-  private final Integer stockId;
+  private Integer stockId;
   @Column(name = "end_time")
-  private final LocalDateTime endTime;
+  private LocalDateTime endTime;
 
   @Column(name = "interval_id")
-  private final Integer intervalId;
+  private Integer intervalId;
+
+  public StockIntervalPriceId() {
+  }
 
   public StockIntervalPriceId(Integer stockId, LocalDateTime endTime, Integer intervalId) {
     this.stockId = stockId;

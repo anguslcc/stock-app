@@ -9,11 +9,11 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
 import java.util.Objects;
-import org.finance.common.payload.StockDataRequest;
+
 
 @Entity
 @Table(name = "stock_info")
-public class StockInfo {
+public class StockInfoEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +25,7 @@ public class StockInfo {
   @OneToMany
   @JoinColumn(name = "stock_id", referencedColumnName = "id", insertable = false,
       updatable = false)
-  private List<StockIntervalPrice> stockIntervalPriceList;
+  private List<StockIntervalPriceEntity> stockIntervalPriceEntityList;
 
   public Integer getId() {
     return id;
@@ -59,13 +59,13 @@ public class StockInfo {
     this.currency = currency;
   }
 
-  public List<StockIntervalPrice> getStockIntervalPriceList() {
-    return stockIntervalPriceList;
+  public List<StockIntervalPriceEntity> getStockIntervalPriceEntityList() {
+    return stockIntervalPriceEntityList;
   }
 
-  public void setStockIntervalPriceList(
-      List<StockIntervalPrice> stockIntervalPriceList) {
-    this.stockIntervalPriceList = stockIntervalPriceList;
+  public void setStockIntervalPriceEntityList(
+      List<StockIntervalPriceEntity> stockIntervalPriceEntityList) {
+    this.stockIntervalPriceEntityList = stockIntervalPriceEntityList;
   }
 
   @Override
@@ -76,22 +76,12 @@ public class StockInfo {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StockInfo stockInfo = (StockInfo) o;
-    return Objects.equals(id, stockInfo.id);
+    StockInfoEntity that = (StockInfoEntity) o;
+    return Objects.equals(id, that.id);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(id);
-  }
-
-  public static StockInfo valueOf(StockDataRequest stockDataRequest) {
-    StockInfo stockInfo = new StockInfo();
-
-    stockInfo.symbol = stockDataRequest.getSymbol();
-    stockInfo.currency = stockDataRequest.getCurrency();
-    stockInfo.exchange = stockDataRequest.getExchange();
-
-    return stockInfo;
   }
 }

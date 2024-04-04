@@ -1,9 +1,11 @@
 package org.finance.stockapp.stock.service;
 
 import org.finance.common.payload.StockDataRequest;
-import org.finance.stockapp.stock.entity.StockInfo;
+import org.finance.stockapp.stock.entity.StockInfoEntity;
 
 public interface StockDataService {
 
-  StockInfo saveStockData(StockDataRequest stockDataRequest);
+  void saveStockData(StockDataRequest stockDataRequest);
+
+  StockInfoEntity getStockInfo(Integer id);
 }

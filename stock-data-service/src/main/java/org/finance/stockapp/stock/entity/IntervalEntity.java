@@ -1,6 +1,8 @@
 package org.finance.stockapp.stock.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -8,15 +10,17 @@ import jakarta.persistence.Table;
 import java.util.Objects;
 import org.finance.stockapp.stock.entity.enums.IntervalUnit;
 
+
 @Entity
 @Table(name = "interval")
-public class Interval {
+public class IntervalEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
   private Integer value;
+  @Enumerated(EnumType.STRING)
   private IntervalUnit unit;
 
   public Integer getId() {
@@ -51,8 +55,8 @@ public class Interval {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Interval interval = (Interval) o;
-    return Objects.equals(id, interval.id);
+    IntervalEntity that = (IntervalEntity) o;
+    return Objects.equals(id, that.id);
   }
 
   @Override

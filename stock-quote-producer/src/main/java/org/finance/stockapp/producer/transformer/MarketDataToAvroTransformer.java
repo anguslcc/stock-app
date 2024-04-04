@@ -13,6 +13,10 @@ import org.message.queue.kafka.model.avro.StockQuoteAvroModel;
 
 public class MarketDataToAvroTransformer {
 
+  private MarketDataToAvroTransformer() {
+
+  }
+
   public static List<StockQuoteAvroModel> from(MarketDataResponse marketDataResponse) {
     List<StockQuoteAvroModel> stockQuoteAvroModelList = new ArrayList<>();
     List<PriceData> priceDataList = marketDataResponse.getValues();

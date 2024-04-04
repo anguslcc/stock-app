@@ -8,10 +8,11 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
+
 @Entity
 @Table(name = "stock_interval_price")
 @IdClass(StockIntervalPriceId.class)
-public class StockIntervalPrice {
+public class StockIntervalPriceEntity {
 
   @Id
   private Integer stockId;
@@ -28,7 +29,7 @@ public class StockIntervalPrice {
   @OneToOne
   @JoinColumn(name = "interval_id", referencedColumnName = "id", insertable = false,
       updatable = false)
-  private Interval interval;
+  private IntervalEntity intervalEntity;
 
   public Integer getStockId() {
     return stockId;
@@ -94,11 +95,11 @@ public class StockIntervalPrice {
     this.volume = volume;
   }
 
-  public Interval getInterval() {
-    return interval;
+  public IntervalEntity getIntervalEntity() {
+    return intervalEntity;
   }
 
-  public void setInterval(Interval interval) {
-    this.interval = interval;
+  public void setIntervalEntity(IntervalEntity intervalEntity) {
+    this.intervalEntity = intervalEntity;
   }
 }

@@ -1,11 +1,15 @@
 package org.finance.stockapp.stock.controller;
 
 import org.finance.common.payload.StockDataRequest;
-import org.finance.stockapp.stock.entity.StockInfo;
+import org.finance.stockapp.stock.entity.StockInfoEntity;
 import org.finance.stockapp.stock.service.StockDataService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -20,13 +24,19 @@ public class StockDataController {
     this.stockDataService = stockDataService;
   }
 
-  @GetMapping("/test")
-  public ResponseEntity<String> test() {
-    return ResponseEntity.ok("Test Called Successfully");
+  @GetMapping("/stocks/{id}")
+  public ResponseEntity<StockInfoEntity> getStockInfo(@PathVariable Integer id) {
+    return ResponseEntity.ok(stockDataService.getStockInfo(id));
+  }
+
+  @PostMapping("/stocks")
+  public ResponseEntity<Void> saveStockData(@RequestBody StockDataRequest stockDataRequest) {
+    stockDataService.saveStockData(stockDataRequest);
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @GetMapping("/save-stock-data")
-  public ResponseEntity<StockInfo> saveStockData() {
+  public ResponseEntity<Void> testSaveStockData() {
     StockDataRequest stockDataRequest = StockDataRequest
         .newBuilder()
         .setSymbol("AAPL")
@@ -41,6 +51,7 @@ public class StockDataController {
         .setVolume(3001)
         .build();
 
-    return ResponseEntity.ok(stockDataService.saveStockData(stockDataRequest));
+    stockDataService.saveStockData(stockDataRequest);
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 }
