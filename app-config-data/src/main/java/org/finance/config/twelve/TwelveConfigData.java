@@ -8,19 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "twelve-config")
 public class TwelveConfigData {
 
-  private String apiKey;
   private String url;
   private List<String> symbols;
   private String interval;
   private int outputSize;
-
-  public String getApiKey() {
-    return apiKey;
-  }
-
-  public void setApiKey(String apiKey) {
-    this.apiKey = apiKey;
-  }
 
   public String getUrl() {
     return url;
@@ -57,9 +48,8 @@ public class TwelveConfigData {
   @Override
   public String toString() {
     return "TwelveConfigData{" +
-        "apiKey='" + apiKey + '\'' +
-        ", url='" + url + '\'' +
-        ", symbols='" + symbols + '\'' +
+        "url='" + url + '\'' +
+        ", symbols=" + symbols +
         ", interval='" + interval + '\'' +
         ", outputSize=" + outputSize +
         '}';

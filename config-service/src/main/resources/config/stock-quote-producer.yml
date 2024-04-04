@@ -31,7 +31,6 @@ kafka-producer-config:
 
 twelve-config:
   url: https://api.twelvedata.com/time_series?apikey={apikey}&interval={interval}&symbol={symbol}&format=JSON&outputsize={outputsize}
-  api-key: 
   symbols: AAPL,MMM
   interval: 1min
   output-size: 1

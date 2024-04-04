@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.finance.config.api.ApiKeyConfigData;
 import org.finance.config.twelve.TwelveConfigData;
 import org.finance.stockapp.producer.external.payload.MarketDataResponse;
 import org.finance.stockapp.producer.external.service.MarketDataService;
@@ -21,14 +22,19 @@ public class MakerDataServiceImpl implements MarketDataService {
 
   private final TwelveConfigData twelveConfigData;
 
-  public MakerDataServiceImpl(RestTemplate restTemplate, TwelveConfigData twelveConfigData) {
+  private final ApiKeyConfigData apiKeyConfigData;
+
+  public MakerDataServiceImpl(RestTemplate restTemplate, TwelveConfigData twelveConfigData,
+      ApiKeyConfigData apiKeyConfigData) {
     this.restTemplate = restTemplate;
     this.twelveConfigData = twelveConfigData;
+    this.apiKeyConfigData = apiKeyConfigData;
   }
 
   @Override
   public List<MarketDataResponse> getMarketData() {
     LOG.info("twelveConfigData: {}", twelveConfigData);
+    LOG.info("apiKeyConfigData: {}", apiKeyConfigData);
 
     List<MarketDataResponse> marketDataResponseList = new ArrayList<>();
     Map<String, String> parameterMap = buildBaseParameterMap();
@@ -56,7 +62,7 @@ public class MakerDataServiceImpl implements MarketDataService {
   private Map<String, String> buildBaseParameterMap() {
     Map<String, String> parameterMap = new HashMap<>();
 
-    parameterMap.put("apikey", twelveConfigData.getApiKey());
+    parameterMap.put("apikey", apiKeyConfigData.getTwelve());
     parameterMap.put("interval", twelveConfigData.getInterval());
     parameterMap.put("outputsize", String.valueOf(twelveConfigData.getOutputSize()));
 
