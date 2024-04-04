@@ -1,4 +1,4 @@
-package org.finance.stockapp.stock.entity.enums;
+package org.finance.common.enums;
 
 public enum IntervalUnit {
   MINUTE, HOUR, DAY, WEEK, MONTH;

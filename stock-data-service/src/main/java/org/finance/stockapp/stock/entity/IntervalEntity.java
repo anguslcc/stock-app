@@ -7,12 +7,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import java.util.Objects;
-import org.finance.stockapp.stock.entity.enums.IntervalUnit;
+import org.finance.common.enums.IntervalUnit;
 
 
 @Entity
-@Table(name = "interval")
+@Table(name = "interval", uniqueConstraints = {@UniqueConstraint(columnNames = {"value", "unit"})})
 public class IntervalEntity {
 
   @Id
@@ -62,5 +63,14 @@ public class IntervalEntity {
   @Override
   public int hashCode() {
     return Objects.hash(id);
+  }
+
+  @Override
+  public String toString() {
+    return "IntervalEntity{" +
+        "id=" + id +
+        ", value=" + value +
+        ", unit=" + unit +
+        '}';
   }
 }

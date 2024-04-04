@@ -4,7 +4,7 @@ import org.finance.common.payload.StockDataRequest;
 import org.finance.stockapp.stock.entity.IntervalEntity;
 import org.finance.stockapp.stock.entity.StockInfoEntity;
 import org.finance.stockapp.stock.entity.StockIntervalPriceEntity;
-import org.finance.stockapp.stock.entity.enums.IntervalUnit;
+import org.finance.common.enums.IntervalUnit;
 
 public class StockDataRequestExtractor {
 
@@ -25,11 +25,8 @@ public class StockDataRequestExtractor {
   public IntervalEntity getIntervalEntity() {
     IntervalEntity intervalEntity = new IntervalEntity();
 
-    String intervalUnitStr = stockDataRequest.getInterval().replaceAll("\\d", "");
-    intervalEntity.setUnit(IntervalUnit.convert(intervalUnitStr));
-
-    String intervalValueStr = stockDataRequest.getInterval().replaceAll("[^\\d]", "");
-    intervalEntity.setValue(Integer.valueOf(intervalValueStr));
+    intervalEntity.setUnit(stockDataRequest.getIntervalUnit());
+    intervalEntity.setValue(stockDataRequest.getIntervalValue());
 
     return intervalEntity;
   }

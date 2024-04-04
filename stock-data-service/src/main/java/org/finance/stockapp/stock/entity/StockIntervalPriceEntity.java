@@ -102,4 +102,19 @@ public class StockIntervalPriceEntity {
   public void setIntervalEntity(IntervalEntity intervalEntity) {
     this.intervalEntity = intervalEntity;
   }
+
+  @Override
+  public String toString() {
+    return "StockIntervalPriceEntity{" +
+        "stockId=" + stockId +
+        ", endTime=" + endTime +
+        ", intervalId=" + intervalId +
+        ", open=" + open +
+        ", high=" + high +
+        ", low=" + low +
+        ", close=" + close +
+        ", volume=" + volume +
+        ", intervalEntity=" + intervalEntity +
+        '}';
+  }
 }

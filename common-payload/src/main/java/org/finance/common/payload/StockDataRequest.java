@@ -1,6 +1,7 @@
 package org.finance.common.payload;
 
 import java.time.LocalDateTime;
+import org.finance.common.enums.IntervalUnit;
 
 public class StockDataRequest {
 
@@ -59,6 +60,42 @@ public class StockDataRequest {
   public Integer getVolume() {
     return volume;
   }
+
+  public IntervalUnit getIntervalUnit() {
+    if (this.interval != null) {
+      String intervalUnitStr = this.interval.replaceAll("\\d", "");
+      return IntervalUnit.convert(intervalUnitStr);
+    } else {
+      return null;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return "StockDataRequest{" +
+        "symbol='" + symbol + '\'' +
+        ", interval='" + interval + '\'' +
+        ", currency='" + currency + '\'' +
+        ", exchange='" + exchange + '\'' +
+        ", type='" + type + '\'' +
+        ", endTime=" + endTime +
+        ", open=" + open +
+        ", high=" + high +
+        ", low=" + low +
+        ", close=" + close +
+        ", volume=" + volume +
+        '}';
+  }
+
+  public Integer getIntervalValue() {
+    if (this.interval != null) {
+      String intervalValueStr = this.interval.replaceAll("[^\\d]", "");
+      return Integer.valueOf(intervalValueStr);
+    } else {
+      return null;
+    }
+  }
+
 
   public static StockDataRequestBuilder newBuilder() {
     return new StockDataRequestBuilder();

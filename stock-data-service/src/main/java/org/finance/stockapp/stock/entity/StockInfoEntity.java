@@ -7,12 +7,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import java.util.List;
 import java.util.Objects;
 
 
 @Entity
-@Table(name = "stock_info")
+@Table(name = "stock_info", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"symbol", "exchange"})})
 public class StockInfoEntity {
 
   @Id
@@ -83,5 +85,16 @@ public class StockInfoEntity {
   @Override
   public int hashCode() {
     return Objects.hash(id);
+  }
+
+  @Override
+  public String toString() {
+    return "StockInfoEntity{" +
+        "id=" + id +
+        ", symbol='" + symbol + '\'' +
+        ", exchange='" + exchange + '\'' +
+        ", currency='" + currency + '\'' +
+        ", stockIntervalPriceEntityList=" + stockIntervalPriceEntityList +
+        '}';
   }
 }
