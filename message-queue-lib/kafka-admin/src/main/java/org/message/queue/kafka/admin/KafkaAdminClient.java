@@ -52,8 +52,8 @@ public class KafkaAdminClient {
     try {
       createTopicsResult = retryTemplate.execute(this::doCreateTopics);
       LOG.info("Create topic result {}", createTopicsResult.values().values());
-    } catch (Throwable t) {
-      throw new KafkaClientException("Reached max number of retry for creating kafka topic(s)!", t);
+    } catch (Exception e) {
+      throw new KafkaClientException("Reached max number of retry for creating kafka topic(s)!", e);
     }
     checkTopicsCreated();
   }
@@ -108,6 +108,7 @@ public class KafkaAdminClient {
     try {
       Thread.sleep(sleepTimeMs);
     } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
       throw new KafkaClientException("Error while sleeping for waiting new created topics!!");
     }
   }

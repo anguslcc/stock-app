@@ -17,7 +17,7 @@ public class StockQuoteKafkaProducerImpl implements KafkaProducer<Long, StockQuo
 
   private static final Logger LOG = LoggerFactory.getLogger(StockQuoteKafkaProducerImpl.class);
 
-  private KafkaTemplate<Long, StockQuoteAvroModel> kafkaTemplate;
+  private final KafkaTemplate<Long, StockQuoteAvroModel> kafkaTemplate;
 
   public StockQuoteKafkaProducerImpl(KafkaTemplate<Long, StockQuoteAvroModel> template) {
     this.kafkaTemplate = template;
@@ -45,10 +45,9 @@ public class StockQuoteKafkaProducerImpl implements KafkaProducer<Long, StockQuo
       if (ex == null) {
         RecordMetadata metadata = result.getRecordMetadata();
         LOG.info(
-            "Received new metadata. Topic: {}; Partition {}; Offset {}; Timestamp {}, at time {}",
-            metadata.topic(),
+            "Received new metadata. Topic@Offset: {}; Partition {}; Timestamp {}, at time {}",
+            metadata,
             metadata.partition(),
-            metadata.offset(),
             metadata.timestamp(),
             System.nanoTime());
       } else {

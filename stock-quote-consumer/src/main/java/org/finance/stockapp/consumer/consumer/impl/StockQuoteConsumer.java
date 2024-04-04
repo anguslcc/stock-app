@@ -67,9 +67,9 @@ public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
     LOG.info("{} number of message received with keys {}, partitions {} and offsets {}, " +
             "sending it to elastic: Thread id {}",
         messages.size(),
-        keys.toString(),
-        partitions.toString(),
-        offsets.toString(),
+        keys,
+        partitions,
+        offsets,
         Thread.currentThread().getId());
 
     for (StockQuoteAvroModel message : messages) {
