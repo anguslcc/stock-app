@@ -35,4 +35,4 @@ retry-config:
   sleep-time-ms: 2000
 
 microservice-config:
-  base-url: ${GATEWAY_SERVER_URL:http://localhost:8060}
+  base-url: ${GATEWAY_SERVER_URL:http://localhost:8080}

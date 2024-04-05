@@ -31,9 +31,9 @@ kafka-producer-config:
 
 twelve-config:
   url: https://api.twelvedata.com/time_series?apikey={apikey}&interval={interval}&symbol={symbol}&format=JSON&outputsize={outputsize}
-  symbols: AAPL,MMM
+  symbols: AAPL,NVDA,TSLA
   interval: 1min
-  output-size: 1
+  output-size: 3
 
 stock-quote-producer-config:
   sleep-time: 60000

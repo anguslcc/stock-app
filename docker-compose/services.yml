@@ -108,7 +108,7 @@ services:
   gateway-service:
     image: ${GROUP_ID}/gateway-service:${SERVICE_VERSION:-latest}
     ports:
-      - "8060:8060"
+      - "8080:8080"
     depends_on:
       discovery-service:
         condition: service_healthy

@@ -20,7 +20,7 @@ spring:
     ansi:
       enabled: always
   datasource:
-    url: jdbc:postgresql://${DATABASE_SERVICE:localhost}:5432/market-db
+    url: jdbc:postgresql://${DATABASE_SERVICE:localhost}:5432/market_db
     username: admin
     password: password
     hikari:
