@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.util.List;
 import java.util.Objects;
+import org.finance.common.payload.StockMetaResponse;
 
 
 @Entity
@@ -96,5 +97,14 @@ public class StockInfoEntity {
         ", currency='" + currency + '\'' +
         ", stockIntervalPriceEntityList=" + stockIntervalPriceEntityList +
         '}';
+  }
+
+  public StockMetaResponse toStockMetaResponse() {
+    return StockMetaResponse.newBuilder()
+        .setId(this.id)
+        .setSymbol(this.symbol)
+        .setExchange(this.exchange)
+        .setCurrency(this.currency)
+        .build();
   }
 }

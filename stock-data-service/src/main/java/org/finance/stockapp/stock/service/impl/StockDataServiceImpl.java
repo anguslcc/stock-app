@@ -1,7 +1,9 @@
 package org.finance.stockapp.stock.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 import org.finance.common.payload.StockDataRequest;
+import org.finance.common.payload.StockMetaResponse;
 import org.finance.stockapp.stock.entity.IntervalEntity;
 import org.finance.stockapp.stock.entity.StockInfoEntity;
 import org.finance.stockapp.stock.entity.StockIntervalPriceId;
@@ -65,6 +67,12 @@ public class StockDataServiceImpl implements StockDataService {
   @Override
   public StockInfoEntity getStockInfo(Integer id) {
     return stockInfoRepository.findById(id).orElse(null);
+  }
+
+  @Override
+  public List<StockMetaResponse> getStockMetaList() {
+    return stockInfoRepository.findAll().stream().map(StockInfoEntity::toStockMetaResponse)
+        .toList();
   }
 
 }

@@ -1,6 +1,8 @@
 package org.finance.stockapp.stock.controller;
 
+import java.util.List;
 import org.finance.common.payload.StockDataRequest;
+import org.finance.common.payload.StockMetaResponse;
 import org.finance.stockapp.stock.entity.StockInfoEntity;
 import org.finance.stockapp.stock.service.StockDataService;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,12 @@ public class StockDataController {
   public StockDataController(StockDataService stockDataService) {
     this.stockDataService = stockDataService;
   }
+
+  @GetMapping("/stocks/")
+  public ResponseEntity<List<StockMetaResponse>> getStockInfo() {
+    return ResponseEntity.ok(stockDataService.getStockMetaList());
+  }
+
 
   @GetMapping("/stocks/{id}")
   public ResponseEntity<StockInfoEntity> getStockInfo(@PathVariable Integer id) {
