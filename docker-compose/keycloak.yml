@@ -6,6 +6,8 @@ services:
     hostname: localhost
     ports:
       - 7000:7000
+    volumes:
+      - ./keycloak/stockapp-realm-export.json:/opt/keycloak/data/import/stockapp-realm-export.json
     environment:
       - "KEYCLOAK_ADMIN=admin"
       - "KEYCLOAK_ADMIN_PASSWORD=admin"
@@ -17,8 +19,7 @@ services:
       - "KC_DB_USERNAME=admin"
       - "KC_DB_PASSWORD=password"
     restart: always
-    command:
-      - "start-dev"
+    command: ["start-dev", "--import-realm"]
     networks:
       - ${GLOBAL_NETWORK:-keycloak}
     depends_on:
