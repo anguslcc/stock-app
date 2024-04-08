@@ -22,6 +22,12 @@ services:
     command: [ "start-dev", "--import-realm" ]
     networks:
       - ${GLOBAL_NETWORK:-keycloak}
+    healthcheck:
+      test: [ "CMD-SHELL", "exec 3<>/dev/tcp/localhost/7000 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'" ]
+      start_period: 40s
+      interval: 10s
+      timeout: 5s
+      retries: 5
     depends_on:
       postgres:
         condition: service_healthy      
