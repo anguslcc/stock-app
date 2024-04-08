@@ -31,9 +31,10 @@ market data.
 
 1. cd docker-compose
 2. Open separate windows for executing following commands
-  * docker-compose up gateway-service
-  * docker-compose up stock-quote-producer
-  * docker-compose up stock-quote-consumer
+
+* docker-compose up gateway-service
+* docker-compose up stock-quote-producer
+* docker-compose up stock-quote-consumer
 
 ## Test API
 

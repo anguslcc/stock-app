@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
+@Component
 public class KeycloakRoleConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
 
   private static final Logger LOG = LoggerFactory.getLogger(KeycloakRoleConverter.class);
@@ -21,7 +23,8 @@ public class KeycloakRoleConverter implements Converter<Jwt, Collection<GrantedA
   @Override
   public Collection<GrantedAuthority> convert(Jwt jwt) {
 
-    Map<String, Object> realmAccess = (Map<String, Object>) jwt.getClaims().get(KEYCLOAK_REALM_ACCESS_KEY);
+    Map<String, Object> realmAccess = (Map<String, Object>) jwt.getClaims()
+        .get(KEYCLOAK_REALM_ACCESS_KEY);
 
     if (realmAccess == null || realmAccess.isEmpty()) {
       return new ArrayList<>();
@@ -31,7 +34,7 @@ public class KeycloakRoleConverter implements Converter<Jwt, Collection<GrantedA
 
     LOG.info("Roles in JWT: {} ", roleList);
 
-    return new ArrayList<>(roleList.stream().map(roleName -> "ROLE_" + roleName)
+    return new ArrayList<>(roleList.stream()
         .map(SimpleGrantedAuthority::new).toList());
   }
 
