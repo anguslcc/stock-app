@@ -37,7 +37,8 @@ public class GatewaySecurityConfig {
     http
         .csrf(CsrfSpec::disable)
         .authorizeExchange(exchanges -> exchanges
-            .pathMatchers("/stock-data/stocks").hasAuthority(ROLE_STOCK_FULL_CONTROL)
+            //.pathMatchers("/stock-data/stocks").hasAuthority(ROLE_STOCK_FULL_CONTROL)
+            .pathMatchers("/stock-data/stocks").permitAll()
             .pathMatchers("/stock-data/stocks/**").hasAuthority(ROLE_STOCK_READ)
             .anyExchange().permitAll()
         ).oauth2ResourceServer(oauth2ResourceServerCustomizer ->
