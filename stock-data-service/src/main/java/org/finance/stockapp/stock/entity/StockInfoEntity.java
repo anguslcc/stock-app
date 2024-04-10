@@ -107,4 +107,5 @@ public class StockInfoEntity {
         .setCurrency(this.currency)
         .build();
   }
+
 }

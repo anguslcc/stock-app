@@ -16,7 +16,7 @@
               "pm.test(\"save environment variable\", ()=> {    \r",
               "    pm.response.to.have.status(200)    \r",
               "    var response = pm.response.json()  \r",
-              "    pm.environment.set(\"access_token\", response.access_token);  \r",
+              "    pm.collectionVariables.set(\"access_token\", response.access_token);\r",
               "})  "
             ],
             "type": "text/javascript",
@@ -80,7 +80,7 @@
               "pm.test(\"save environment variable\", ()=> {    \r",
               "    pm.response.to.have.status(200)    \r",
               "    var response = pm.response.json()  \r",
-              "    pm.environment.set(\"access_token\", response.access_token);  \r",
+              "    pm.collectionVariables.set(\"access_token\", response.access_token);\r",
               "})  "
             ],
             "type": "text/javascript",
@@ -135,7 +135,7 @@
       "response": []
     },
     {
-      "name": "Get Stock Info",
+      "name": "Get All Available Stocks",
       "protocolProfileBehavior": {
         "disableBodyPruning": true
       },
@@ -178,6 +178,49 @@
       "response": []
     },
     {
+      "name": "Get Stock Details",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/stock-data/stocks/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "stock-data",
+            "stocks",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name": "Save Stock Data",
       "request": {
         "auth": {
@@ -191,10 +234,16 @@
           ]
         },
         "method": "POST",
-        "header": [],
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
         "body": {
           "mode": "raw",
-          "raw": "",
+          "raw": "{\r\n    \"symbol\": \"AAPL\",  \r\n    \"interval\": \"1min\",\r\n    \"currency\": \"USD\",\r\n    \"exchange\": \"NASDAQ\",\r\n    \"type\": \"Common Stock\",\r\n    \"endTime\": \"2024-03-10T15:00\",\r\n    \"open\": 10.53,\r\n    \"high\": 12.12,\r\n    \"low\": 8.23,\r\n    \"close\": 9.01,\r\n    \"volume\": 55002\r\n}",
           "options": {
             "raw": {
               "language": "json"
