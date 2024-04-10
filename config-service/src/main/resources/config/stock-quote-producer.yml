@@ -30,7 +30,9 @@ kafka-producer-config:
   retry-count: 5
 
 twelve-config:
-  url: https://api.twelvedata.com/time_series?apikey={apikey}&interval={interval}&symbol={symbol}&format=JSON&outputsize={outputsize}
+  scheme: https
+  host: api.twelvedata.com
+  path: /time_series
   symbols: AAPL,NVDA,TSLA
   interval: 1min
   output-size: 3

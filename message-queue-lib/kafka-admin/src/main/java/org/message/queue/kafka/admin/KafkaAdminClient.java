@@ -9,6 +9,7 @@ import org.finance.config.kafka.KafkaConfigData;
 import org.finance.config.retry.RetryConfigData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -39,7 +40,7 @@ public class KafkaAdminClient {
       RetryConfigData retryConfigData,
       AdminClient client,
       RetryTemplate template,
-      WebClient webClient) {
+      @Qualifier("defaultWebClient") WebClient webClient) {
     this.kafkaConfigData = config;
     this.retryConfigData = retryConfigData;
     this.adminClient = client;

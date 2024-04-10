@@ -8,12 +8,12 @@ import java.util.TimeZone;
 import org.finance.common.payload.StockDataRequest;
 import org.finance.config.kafka.KafkaConfigData;
 import org.finance.config.kafka.KafkaConsumerConfigData;
-import org.finance.config.microservice.MicroserviceConfigData;
 import org.finance.stockapp.consumer.consumer.KafkaConsumer;
 import org.message.queue.kafka.admin.KafkaAdminClient;
 import org.message.queue.kafka.model.avro.StockQuoteAvroModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,8 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Service
 public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
@@ -33,20 +34,20 @@ public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
   private final KafkaAdminClient kafkaAdminClient;
   private final KafkaConfigData kafkaConfigData;
   private final KafkaConsumerConfigData kafkaConsumerConfigData;
-  private final RestTemplate restTemplate;
-  private final MicroserviceConfigData microserviceConfigData;
+
+  private final WebClient webClient;
+
 
   public StockQuoteConsumer(KafkaListenerEndpointRegistry listenerEndpointRegistry,
       KafkaAdminClient adminClient,
       KafkaConfigData configData,
-      KafkaConsumerConfigData consumerConfigData, RestTemplate restTemplate,
-      MicroserviceConfigData microserviceConfigData) {
+      KafkaConsumerConfigData consumerConfigData,
+      @Qualifier("stockAppWebClient") WebClient webClient) {
     this.kafkaListenerEndpointRegistry = listenerEndpointRegistry;
     this.kafkaAdminClient = adminClient;
     this.kafkaConfigData = configData;
     this.kafkaConsumerConfigData = consumerConfigData;
-    this.restTemplate = restTemplate;
-    this.microserviceConfigData = microserviceConfigData;
+    this.webClient = webClient;
   }
 
   @EventListener
@@ -108,10 +109,19 @@ public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
         .setVolume(message.getVolume())
         .build();
 
-    String url = microserviceConfigData.getBaseUrl() + "/stock-data/stocks";
-    ResponseEntity<Void> response = restTemplate.postForEntity(url, stockDataRequest, Void.class);
+    ResponseEntity<Void> response = webClient.post()
+        .uri("/stock-data/stocks")
+        .body(Mono.just(stockDataRequest), StockDataRequest.class)
+        .retrieve()
+        .toBodilessEntity()
+        .block();
 
-    LOG.info("Response: {} ", response.getStatusCode().is2xxSuccessful());
+    if (response != null) {
+      LOG.info("Response: {} ", response.getStatusCode().is2xxSuccessful());
+    } else {
+      LOG.info("Response is null");
+    }
+
   }
 
 }

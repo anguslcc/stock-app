@@ -36,3 +36,18 @@ retry-config:
 
 microservice-config:
   base-url: ${GATEWAY_SERVER_URL:http://localhost:8080}
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            provider: keycloak
+            authorization-grant-type: client_credentials
+            client-id: stockapp-full-control-api
+            client-secret: cnthWPaGN31are0vL9hXpjgtB0k5TDTM
+            scope: openid
+        provider:
+          keycloak:
+            token-url: ${KEYCLOAK_SERVER_URL:http://localhost:7000}/realms/stockapp/protocol/openid-connect/token
