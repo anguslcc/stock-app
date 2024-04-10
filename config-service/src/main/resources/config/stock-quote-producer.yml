@@ -39,3 +39,6 @@ twelve-config:
 
 stock-quote-producer-config:
   sleep-time: 60000
+
+stockapp-web-client:
+  enabled: false
