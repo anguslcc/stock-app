@@ -1,4 +1,4 @@
-package org.finance.stockapp.consumer.consumer;
+package org.finance.stockapp.consumer.service;
 
 import org.apache.avro.specific.SpecificRecordBase;
 

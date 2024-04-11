@@ -7,7 +7,7 @@ import java.util.List;
 import org.finance.config.api.ApiKeyConfigData;
 import org.finance.config.twelve.TwelveConfigData;
 import org.finance.stockapp.producer.external.payload.MarketDataResponse;
-import org.finance.stockapp.producer.external.service.MarketDataService;
+import org.finance.stockapp.producer.external.service.MarketDataRequestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,9 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
-public class MakerDataServiceImpl implements MarketDataService {
+public class TwelveDataRequestImpl implements MarketDataRequestService {
 
-  private static final Logger LOG = LoggerFactory.getLogger(MakerDataServiceImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(TwelveDataRequestImpl.class);
   private final WebClient webClient;
 
   private final TwelveConfigData twelveConfigData;
@@ -26,7 +26,7 @@ public class MakerDataServiceImpl implements MarketDataService {
   private final ApiKeyConfigData apiKeyConfigData;
 
 
-  public MakerDataServiceImpl(
+  public TwelveDataRequestImpl(
       @Qualifier("defaultWebClient") WebClient webClient,
       TwelveConfigData twelveConfigData,
       ApiKeyConfigData apiKeyConfigData) {

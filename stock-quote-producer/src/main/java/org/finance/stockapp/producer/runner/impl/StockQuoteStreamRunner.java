@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import org.finance.config.kafka.KafkaConfigData;
 import org.finance.config.stock.StockQuoteProducerConfigData;
 import org.finance.stockapp.producer.external.payload.MarketDataResponse;
-import org.finance.stockapp.producer.external.service.MarketDataService;
+import org.finance.stockapp.producer.external.service.MarketDataRequestService;
 import org.finance.stockapp.producer.transformer.MarketDataToAvroTransformer;
 import org.finance.stockapp.producer.exception.StockQuoteProducerException;
 import org.message.queue.kafka.model.avro.StockQuoteAvroModel;
@@ -27,12 +27,12 @@ public class StockQuoteStreamRunner implements StreamRunner {
 
   private final KafkaProducer<Long, StockQuoteAvroModel> kafkaProducer;
 
-  private final MarketDataService marketDataService;
+  private final MarketDataRequestService marketDataService;
 
   public StockQuoteStreamRunner(KafkaConfigData kafkaConfigData,
       StockQuoteProducerConfigData stockQuoteProducerConfigData,
       KafkaProducer<Long, StockQuoteAvroModel> kafkaProducer,
-      MarketDataService marketDataService) {
+      MarketDataRequestService marketDataService) {
     this.kafkaConfigData = kafkaConfigData;
     this.stockQuoteProducerConfigData = stockQuoteProducerConfigData;
     this.kafkaProducer = kafkaProducer;

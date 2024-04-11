@@ -1,4 +1,4 @@
-package org.finance.stockapp.consumer.consumer.impl;
+package org.finance.stockapp.consumer.service.impl;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -8,7 +8,7 @@ import java.util.TimeZone;
 import org.finance.common.payload.StockDataRequest;
 import org.finance.config.kafka.KafkaConfigData;
 import org.finance.config.kafka.KafkaConsumerConfigData;
-import org.finance.stockapp.consumer.consumer.KafkaConsumer;
+import org.finance.stockapp.consumer.service.KafkaConsumer;
 import org.message.queue.kafka.admin.KafkaAdminClient;
 import org.message.queue.kafka.model.avro.StockQuoteAvroModel;
 import org.slf4j.Logger;
