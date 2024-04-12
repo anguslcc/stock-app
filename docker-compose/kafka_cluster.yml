@@ -12,6 +12,12 @@ services:
       ZOOKEEPER_INIT_LIMIT: 5
       ZOOKEEPER_SYNC_LIMIT: 2
       ZOOKEEPER_SERVERS: zookeeper:2888:3888
+    healthcheck:
+      test: [ "CMD", "echo", "ruok", "|", "nc", "zookeeper", "2181", "|", "grep", "imok" ]
+      start_period: 15s
+      interval: 20s
+      timeout: 10s
+      retries: 3
     networks:
       - ${GLOBAL_NETWORK:-kafka}
 
@@ -19,10 +25,14 @@ services:
     image: confluentinc/cp-schema-registry:${KAFKA_VERSION}
     hostname: schema-registry
     depends_on:
-      - zookeeper
-      - kafka-broker-1
-      - kafka-broker-2
-      - kafka-broker-3
+      zookeeper:
+        condition: service_healthy
+      kafka-broker-1:
+        condition: service_healthy
+      kafka-broker-2:
+        condition: service_healthy
+      kafka-broker-3:
+        condition: service_healthy
     ports:
       - "9000:9000"
     environment:
@@ -31,14 +41,14 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker-2:9092,LISTENER_LOCAL://localhost:29092 # for kafka 7.0.0
       SCHEMA_REGISTRY_LISTENERS: http://schema-registry:9000
       SCHEMA_REGISTRY_DEBUG: 'true'
-    networks:
-      - ${GLOBAL_NETWORK:-kafka}
     healthcheck:
       test: [ "CMD", "curl", "--output", "/dev/null", "--silent", "--head", "--fail", "http://schema-registry:9000/subjects" ]
       start_period: 10s
       interval: 10s
       timeout: 10s
       retries: 5
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
 
   kafka-broker-1:
     image: confluentinc/cp-kafka:${KAFKA_VERSION}
@@ -46,7 +56,8 @@ services:
     ports:
       - "19092:19092"
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -54,14 +65,14 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,LISTENER_LOCAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_COMPRESSION_TYPE: producer
-    networks:
-      - ${GLOBAL_NETWORK:-kafka}
     healthcheck:
       test: [ "CMD", "kafka-topics", "--bootstrap-server", "kafka-broker-1:9092", "--list" ]
       start_period: 15s
       interval: 5s
       timeout: 10s
       retries: 5
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
 
   kafka-broker-2:
     image: confluentinc/cp-kafka:${KAFKA_VERSION}
@@ -69,7 +80,8 @@ services:
     ports:
       - "29092:29092"
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     environment:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -77,14 +89,14 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,LISTENER_LOCAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_COMPRESSION_TYPE: producer
-    networks:
-      - ${GLOBAL_NETWORK:-kafka}
     healthcheck:
       test: [ "CMD", "kafka-topics", "--bootstrap-server", "kafka-broker-2:9092", "--list" ]
       start_period: 15s
       interval: 5s
       timeout: 10s
       retries: 5
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
 
   kafka-broker-3:
     image: confluentinc/cp-kafka:${KAFKA_VERSION}
@@ -92,7 +104,8 @@ services:
     ports:
       - "39092:39092"
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     environment:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -100,12 +113,12 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,LISTENER_LOCAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_COMPRESSION_TYPE: producer
-    networks:
-      - ${GLOBAL_NETWORK:-kafka}
     healthcheck:
       test: [ "CMD", "kafka-topics", "--bootstrap-server", "kafka-broker-3:9092", "--list" ]
       start_period: 15s
       interval: 5s
       timeout: 10s
-      retries: 5     
+      retries: 5
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
       
