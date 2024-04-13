@@ -2,6 +2,7 @@
 
 1. <a href="#1-Project-Overview" id="1">Project Overview</a>
 2. <a href="#2-Getting-Started" id="2">Getting Started</a>
+3. <a href="#3-Whats-Next" id="3">What’s Next</a>
 
 # 1. Project Overview<a id="#1-Project-Overview" href="#1"></a>
 
@@ -153,6 +154,19 @@ within the application.
 - **URL:** http://localhost:7000
 - **User:** admin
 - **Password:** admin
+
+## 3. What’s Next<a id="#3-Whats-Next" href="#3"></a>
+
+- **Document Architecture:** Provide detailed documentation on the project's architecture. This will
+  include diagrams and descriptions to help users understand how the components interact and how
+  data flows within the system.
+- **Transition to KRaft:** With ZooKeeper being marked as deprecated since the 3.5.0 release of
+  Apache Kafka, this project will shift to using the KRaft metadata system. This move follows
+  recommendations from Apache to adopt their newer approach for metadata management.
+- **Implement Frontend:** Develop a user interface to display market data. This frontend will
+  consume the backend API to present data dynamically to users.
+- **Secure Free Hosting:** Identify and utilize a free hosting solution to make the application
+  accessible to a wider audience without any setup required on the user's end.
 
 
 
