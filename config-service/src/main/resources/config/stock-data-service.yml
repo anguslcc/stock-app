@@ -16,6 +16,11 @@ springdoc:
   packagesToScan: org.finance.stockapp.stock
 
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${KEYCLOAK_SERVER_URL:http://localhost:7000}/realms/stockapp/protocol/openid-connect/certs
   output:
     ansi:
       enabled: always
