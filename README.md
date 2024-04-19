@@ -11,10 +11,10 @@ with Spring Cloud. It continuously retrieves market data from an external source
 the system through a microservices architecture. This architecture includes several key components
 designed to handle and secure the data effectively.
 
-**<u>Application Architecture Overview</u>**
+**<ins>Application Architecture Overview</ins>**
 ![Application Architecture Overview](documentation/images/stock-app-overview.png "Application Architecture Overview")
 
-**<u>Centralized Configuration Management Overview</u>**
+**<ins>Centralized Configuration Management Overview</ins>**
 ![Centralized Configuration Management Overview](documentation/images/config-service-overview.png "Centralized Configuration Management Overview")
 
 - **Stock Quote Producer:** This service retrieves market data via an external API and publishes it
