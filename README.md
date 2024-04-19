@@ -9,7 +9,9 @@
 This application serves as a comprehensive demonstration of integrating Apache Kafka and Keycloak
 with Spring Cloud. It continuously retrieves market data from an external source, feeding it into
 the system through a microservices architecture. This architecture includes several key components
-designed to handle and secure the data effectively
+designed to handle and secure the data effectively.
+
+![Architecture Overview Diagram](documentation/images/stock-app-overview.png "Architecture Overview Diagram")
 
 - **Stock Quote Producer:** This service retrieves market data via an external API and publishes it
   to a Kafka message queue.
