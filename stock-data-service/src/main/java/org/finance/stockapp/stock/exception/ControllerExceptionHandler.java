@@ -5,21 +5,30 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-@ControllerAdvice
+@RestControllerAdvice
 @CrossOrigin
 public class ControllerExceptionHandler {
 
   private static final Logger LOG = LoggerFactory.getLogger(ControllerExceptionHandler.class);
 
-  @ExceptionHandler(NotFoundException.class)
+  @ExceptionHandler({NotFoundException.class, NoResourceFoundException.class})
   public ResponseEntity<Void> handleNotFoundException(
-      NotFoundException ex) {
+      Exception ex) {
     return buildErrorResponse(ex, HttpStatus.NOT_FOUND);
   }
+
+  @ExceptionHandler(AccessDeniedException.class)
+  public ResponseEntity<Void> handleAccessDeniedException(
+      Exception ex) {
+    return buildErrorResponse(ex, HttpStatus.FORBIDDEN);
+  }
+
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<Void> handleGlobalException(
@@ -29,7 +38,7 @@ public class ControllerExceptionHandler {
   }
 
   private ResponseEntity<Void> buildErrorResponse(
-      Throwable ex, HttpStatus httpStatus) {
+      Exception ex, HttpStatus httpStatus) {
     HttpHeaders headers = new HttpHeaders();
     headers.add("X-ADVICE", ex.getMessage());
     return ResponseEntity.status(httpStatus).headers(headers).build();
