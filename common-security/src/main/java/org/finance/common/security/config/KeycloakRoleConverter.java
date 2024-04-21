@@ -1,4 +1,4 @@
-package org.finance.stockapp.stock.config;
+package org.finance.common.security.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,9 @@ public class KeycloakRoleConverter implements Converter<Jwt, Collection<GrantedA
     LOG.info("Roles in JWT: {} ", roleList);
 
     return new ArrayList<>(roleList.stream()
-        .map(SimpleGrantedAuthority::new).toList());
+        .map(String::toUpperCase)
+        .map(SimpleGrantedAuthority::new)
+        .toList());
   }
 
 

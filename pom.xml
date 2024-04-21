@@ -52,6 +52,7 @@
     <module>stock-quote-consumer</module>
     <module>common-config</module>
     <module>common-payload</module>
+    <module>common-security</module>
   </modules>
 
   <dependencyManagement>
@@ -70,6 +71,11 @@
       <dependency>
         <groupId>org.finance</groupId>
         <artifactId>common-payload</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.finance</groupId>
+        <artifactId>common-security</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
