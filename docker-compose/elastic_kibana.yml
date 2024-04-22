@@ -7,10 +7,14 @@ volumes:
     driver: local
   kibanadata:
     driver: local
+  filebeatdata01:
+    driver: local
+  logstashdata01:
+    driver: local
 
 services:
   setup:
-    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELK_VERSION}
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - ./scripts/elastic-kibana-setup.sh:/usr/share/elasticsearch/elastic-kibana-setup.sh
@@ -31,7 +35,7 @@ services:
     depends_on:
       setup:
         condition: service_healthy
-    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELK_VERSION}
     labels:
       co.elastic.logs/module: elasticsearch
     volumes:
@@ -77,7 +81,7 @@ services:
     depends_on:
       es01:
         condition: service_healthy
-    image: docker.elastic.co/kibana/kibana:${KIBANA_VERSION}
+    image: docker.elastic.co/kibana/kibana:${ELK_VERSION}
     labels:
       co.elastic.logs/module: kibana
     volumes:
@@ -105,4 +109,28 @@ services:
         ]
       interval: 10s
       timeout: 10s
-      retries: 120     
+      retries: 120
+
+  logstash01:
+    depends_on:
+      es01:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+    image: docker.elastic.co/logstash/logstash:${ELK_VERSION}
+    labels:
+      co.elastic.logs/module: logstash
+    user: root
+    volumes:
+      - certs:/usr/share/logstash/certs
+      - logstashdata01:/usr/share/logstash/data
+      - "./logstash/ingest_data/:/usr/share/logstash/ingest_data/"
+      - "./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro"
+    environment:
+      - xpack.monitoring.enabled=false
+      - ELASTIC_USER=elastic
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ELASTIC_HOSTS=https://es01:9200
+    networks:
+      - ${GLOBAL_NETWORK:-elastic}      
+      
