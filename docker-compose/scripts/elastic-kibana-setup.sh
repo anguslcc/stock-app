@@ -58,3 +58,8 @@ until curl -s -X POST --cacert config/certs/ca/ca.crt -u "elastic:${ELASTIC_PASS
 done
 
 echo "All done!"
+
+#Work around solution for keeping the setup task alive so that its dependent service is able to be restarted
+while true; do
+    sleep 60  # Sleeps for 60 seconds
+done

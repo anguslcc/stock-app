@@ -19,7 +19,7 @@ services:
       - ${GLOBAL_NETWORK:-elastic}
     healthcheck:
       test: [ "CMD-SHELL", "[ -f config/certs/es01/es01.crt ]" ]
-      start_period: 20s  
+      start_period: 20s
       interval: 1s
       timeout: 5s
       retries: 20
@@ -65,7 +65,7 @@ services:
           "CMD-SHELL",
           "curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q 'missing authentication credentials'",
         ]
-      start_period: 30s  
+      start_period: 30s
       interval: 10s
       timeout: 10s
       retries: 10
@@ -99,10 +99,10 @@ services:
           "CMD-SHELL",
           "curl -s -I http://kibana:5601 | grep -q 'HTTP/1.1 302 Found'",
         ]
-      start_period: 40s  
+      start_period: 40s
       interval: 10s
       timeout: 10s
-      retries: 10      
+      retries: 10
 
   logstash01:
     depends_on:
@@ -127,10 +127,10 @@ services:
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_HOSTS=https://es01:9200
     networks:
-      - ${GLOBAL_NETWORK:-elastic}      
+      - ${GLOBAL_NETWORK:-elastic}
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://logstash01:9600/"]
-      start_period: 25s      
+      test: [ "CMD", "curl", "-f", "http://logstash01:9600/" ]
+      start_period: 25s
       interval: 10s
       timeout: 10s
       retries: 5
