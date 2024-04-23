@@ -5,3 +5,5 @@ spring:
     import:
       - "configserver:${CONFIG_SERVER_URL:http://localhost:8088}"
       - "configserver:${CONFIG_SERVER_URL:http://localhost:8088}/api-key"
+logging:
+  config: "${CONFIG_SERVER_URL:http://localhost:8088}/default/default/default/logback-spring.xml"

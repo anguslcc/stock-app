@@ -20,6 +20,8 @@ services:
         condition: service_healthy
       schema-registry:
         condition: service_healthy
+      logstash01:
+        condition: service_healthy
     healthcheck:
       test: [ "CMD", "curl", "-f", "stock-quote-producer:5005/actuator/health" ]
       start_period: 20s
@@ -47,6 +49,8 @@ services:
       keycloak:
         condition: service_healthy
       stock-data-service:
+        condition: service_healthy
+      logstash01:
         condition: service_healthy
     environment:
       - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -Xms128m -Xmx256m"
@@ -85,6 +89,8 @@ services:
       - "8061:8061"
     depends_on:
       config-service:
+        condition: service_healthy
+      logstash01:
         condition: service_healthy
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8061" ]
@@ -137,6 +143,8 @@ services:
       discovery-service:
         condition: service_healthy
       config-service:
+        condition: service_healthy
+      logstash01:
         condition: service_healthy
     environment:
       - "CONFIG_SERVER_URL=${CONFIG_SERVER_URL}"
