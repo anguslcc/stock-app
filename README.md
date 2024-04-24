@@ -6,16 +6,20 @@
 
 # 1. Project Overview<a id="#1-Project-Overview" href="#1"></a>
 
-This application serves as a comprehensive demonstration of integrating Apache Kafka and Keycloak
-with Spring Cloud. It continuously retrieves market data from an external source, feeding it into
-the system through a microservices architecture. This architecture includes several key components
-designed to handle and secure the data effectively.
+This application demonstrates the integration of Apache Kafka, Keycloak, and the Elastic Stack (
+Elasticsearch, Logstash, and Kibana) with Spring Cloud. It continuously retrieves market data from
+an external source and processes it through a microservices architecture. This architecture not only
+handles and secures data effectively but also uses the Elastic Stack to centralize logging across
+all microservices, enhancing system capabilities and operational transparency.
 
 **<ins>Application Architecture Overview</ins>**
 ![Application Architecture Overview](documentation/images/stock-app-overview.png "Application Architecture Overview")
 
 **<ins>Centralized Configuration Management Overview</ins>**
 ![Centralized Configuration Management Overview](documentation/images/config-service-overview.png "Centralized Configuration Management Overview")
+
+**<ins>Log Management Overview with the Elastic Stack</ins>**
+![Log Management Overview with the Elastic Stack](documentation/images/elk-overview.png "Log Management Overview with the Elastic Stack")
 
 - **Stock Quote Producer:** This service retrieves market data via an external API and publishes it
   to a Kafka message queue.
@@ -58,6 +62,15 @@ designed to handle and secure the data effectively.
   Quote Producer and Stock Quote Consumer. The Kafka ecosystem in this project includes a Schema
   Registry for managing message schemas, Zookeeper for cluster coordination, and a Kafka Broker for
   handling message storage and retrieval.
+
+- **Elasticsearch (es01):** Acts as a highly scalable search and analytics engine. It stores,
+  searches, and analyzes big volumes of data quickly and in near real-time, making it a foundational
+  component in the Elastic Stack.
+
+- **Logstash:** Serves as a data processing pipeline that ingests data from multiple sources
+  simultaneously, transforms it into JSON format, and then forwards it to Elasticsearch.
+
+- **Kibana:** Provides powerful visualizations for data stored in Elasticsearch.
 
 # 2. Getting Started<a id="#2-Getting-Started" href="#2"></a>
 
@@ -107,6 +120,8 @@ Before you begin, ensure you have the following software installed on your syste
       related dependencies.
     - Run `watch docker ps` to continuously monitor all components, ensuring they reach a healthy
       status.
+- Please note that starting all modules may take approximately 5 minutes. During this time, monitor
+  the output to ensure that all components are initializing correctly and check for any errors.
 
 ## 2.5  Test the Application
 
@@ -120,17 +135,25 @@ Before you begin, ensure you have the following software installed on your syste
 
 ### 2.5.1  Scenario 1 (Unauthorized Request)
 
-- Run the API request of `Get All Available Stocks`
+- Execute the `Get All Available Stocks` API request.
 
 ### 2.5.2  Scenario 2 (Forbidden Request)
 
-- Run the API request of `Get Access Token (Read)` to get an access token from keycloak
-- Run the API request of `Save Stock Data`
+- Obtain an access token from Keycloak by running the `Get Access Token (Read)` API request.
+- Execute the `Save Stock Data` API request.
 
 ### 2.5.3  Scenario 3 (Authorized Request)
 
-- Run the API request of `Get Access Token (Read)` to get an access token from keycloak
-- Run the API request of `Get All Available Stocks`
+- Obtain an access token from Keycloak by running the `Get Access Token (Read)` API request.
+- Execute the `Get All Available Stocks` API request.
+
+### 2.5.4  Scenario 4 (Continuous Data Retrieval)
+
+- Obtain an access token from Keycloak by running the `Get Access Token (Read)` API request.
+- Execute the `Get Stock Details` API request. Ensure to update the id parameter as necessary based
+  on the output from the `Get All Available Stocks` request.
+- Wait for 1 minute and repeat the `Get Stock Details API` request to verify continuous data
+  fetching.
 
 ## 2.6  Database
 
@@ -160,6 +183,17 @@ within the application.
 - **URL:** http://localhost:7000
 - **User:** admin
 - **Password:** admin
+
+## 2.8 Kibana
+
+View and analyze logs through Kibana using the administration console.
+
+**<u>Administration Console</u>**<br>
+
+- **URL:** http://localhost:5601
+- **User:** elastic
+- **Password:** password
+- **Indices for logs:** logstash-*
 
 ## 3. What’s Next<a id="#3-Whats-Next" href="#3"></a>
 
