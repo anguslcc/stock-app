@@ -1,9 +1,10 @@
 <configuration>
 
   <springProperty name="appName" source="spring.application.name"/>
+  <springProperty name="logStashDestination" source="logging.logstash-url"/>
 
   <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-    <destination>logstash01:5044</destination>
+    <destination>${logStashDestination}</destination>
     <encoder class="net.logstash.logback.encoder.LogstashEncoder">
       <customFields>{"app_name":"${appName}"}</customFields>
     </encoder>

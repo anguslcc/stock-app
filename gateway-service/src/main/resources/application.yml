@@ -3,5 +3,3 @@ spring:
     name: gateway-service
   config:
     import: "configserver:${CONFIG_SERVER_URL:http://localhost:8088}"
-logging:
-  config: "${CONFIG_SERVER_URL:http://localhost:8088}/default/default/default/logback-spring.xml"

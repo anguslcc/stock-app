@@ -6,10 +6,6 @@ eureka:
     serviceUrl:
       defaultZone: ${DISCOVERY_SERVER_URL:http://localhost:8061}/eureka/
 
-logging:
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId:-},%X{spanId:-}] ${LOG_LEVEL_PATTERN:-%5p} %m%n"
-
 spring:
   security:
     oauth2:
@@ -32,8 +28,11 @@ spring:
           filters:
             - RewritePath=/stock-data/(?<path>.*), /$\{path}
 
-
 management:
   tracing:
     sampling:
       probability: 1.0
+
+logging:
+  config: "${CONFIG_SERVER_URL:http://localhost:8088}/default/default/default/logback-spring.xml"
+  logstash-url: ${LOGSTASH_SERVER_URL:localhost:5044}
