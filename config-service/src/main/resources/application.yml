@@ -1,5 +1,10 @@
 server:
   port: 8088
 spring:
+  application:
+    name: config-service
   profiles:
     active: native
+logging:
+  config: classpath:config/logback-spring.xml
+  logstash-url: ${LOGSTASH_SERVER_URL:localhost:5044}

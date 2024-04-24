@@ -1,0 +1,137 @@
+version: "3.8"
+
+volumes:
+  certs:
+    driver: local
+
+services:
+  setup:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELK_VERSION}
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
+      - ./scripts/elastic-kibana-setup.sh:/usr/share/elasticsearch/elastic-kibana-setup.sh
+    user: "0"
+    command: /bin/sh -c  "/usr/share/elasticsearch/elastic-kibana-setup.sh"
+    environment:
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - KIBANA_PASSWORD=${KIBANA_PASSWORD}
+    networks:
+      - ${GLOBAL_NETWORK:-elastic}
+    healthcheck:
+      test: [ "CMD-SHELL", "[ -f config/certs/es01/es01.crt ]" ]
+      start_period: 20s
+      interval: 1s
+      timeout: 5s
+      retries: 20
+
+  es01:
+    depends_on:
+      setup:
+        condition: service_healthy
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELK_VERSION}
+    labels:
+      co.elastic.logs/module: elasticsearch
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
+    ports:
+      - 9200:9200
+    environment:
+      - node.name=es01
+      - cluster.name=docker-cluster
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.key=certs/es01/es01.key
+      - xpack.security.http.ssl.certificate=certs/es01/es01.crt
+      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.key=certs/es01/es01.key
+      - xpack.security.transport.ssl.certificate=certs/es01/es01.crt
+      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.license.self_generated.type=basic
+    networks:
+      - ${GLOBAL_NETWORK:-elastic}
+    mem_limit: 1073741824
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q 'missing authentication credentials'",
+        ]
+      start_period: 30s
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+  kibana:
+    depends_on:
+      es01:
+        condition: service_healthy
+    image: docker.elastic.co/kibana/kibana:${ELK_VERSION}
+    labels:
+      co.elastic.logs/module: kibana
+    volumes:
+      - certs:/usr/share/kibana/config/certs
+    ports:
+      - 5601:5601
+    environment:
+      - SERVERNAME=kibana
+      - ELASTICSEARCH_HOSTS=https://es01:9200
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
+      - XPACK_SECURITY_ENCRYPTIONKEY=${KIBANA_ENCRYPTION_KEY}
+      - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=${KIBANA_ENCRYPTION_KEY}
+      - XPACK_REPORTING_ENCRYPTIONKEY=${KIBANA_ENCRYPTION_KEY}
+    networks:
+      - ${GLOBAL_NETWORK:-elastic}
+    mem_limit: 1073741824
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s -I http://kibana:5601 | grep -q 'HTTP/1.1 302 Found'",
+        ]
+      start_period: 40s
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+  logstash01:
+    depends_on:
+      es01:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+    image: docker.elastic.co/logstash/logstash:${ELK_VERSION}
+    labels:
+      co.elastic.logs/module: logstash
+    user: root
+    volumes:
+      - certs:/usr/share/logstash/certs
+      - "./logstash/ingest_data/:/usr/share/logstash/ingest_data/"
+      - "./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro"
+    ports:
+      - "5044:5044"
+      - "9600:9600"
+    environment:
+      - xpack.monitoring.enabled=false
+      - ELASTIC_USER=elastic
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ELASTIC_HOSTS=https://es01:9200
+    networks:
+      - ${GLOBAL_NETWORK:-elastic}
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://logstash01:9600/" ]
+      start_period: 25s
+      interval: 10s
+      timeout: 10s
+      retries: 5
+ 
