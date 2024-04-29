@@ -172,7 +172,7 @@
       "response": []
     },
     {
-      "name": "Get Stock Details [Symbol / Exchange]",
+      "name": "Get Stock Details (Symbol / Exchange)",
       "protocolProfileBehavior": {
         "disableBodyPruning": true
       },
@@ -216,7 +216,7 @@
       "response": []
     },
     {
-      "name": "Get Stock Details [Id]",
+      "name": "Get Stock Details (Id)",
       "protocolProfileBehavior": {
         "disableBodyPruning": true
       },

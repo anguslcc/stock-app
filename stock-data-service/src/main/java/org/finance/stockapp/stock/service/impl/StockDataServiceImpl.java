@@ -58,7 +58,8 @@ public class StockDataServiceImpl implements StockDataService {
   @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
   public StockDetailResponse getStockInfo(Integer id) {
     StockInfoEntity stockInfoEntity = stockInfoRepository.findById(id).orElseThrow(
-        () -> new NotFoundException("Stock not found"));
+        () -> new NotFoundException(
+            "Sorry, the requested stock record (id: {0}) could not be found.", id));
 
     return buildStockDetailResponse(stockInfoEntity);
   }
@@ -67,7 +68,9 @@ public class StockDataServiceImpl implements StockDataService {
   @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
   public StockDetailResponse getStockInfo(String symbol, String exchange) {
     StockInfoEntity stockInfoEntity = stockInfoRepository.getBy(symbol, exchange).orElseThrow(
-        () -> new NotFoundException("Stock not found"));
+        () -> new NotFoundException(
+            "Sorry, the requested stock record (symbol: {0}, exchange: {1}) could not be found.",
+            symbol, exchange));
 
     return buildStockDetailResponse(stockInfoEntity);
   }

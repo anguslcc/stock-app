@@ -63,7 +63,10 @@ public class StockTransactionServiceImpl implements StockTransactionService {
         stockIntervalPriceId);
 
     if (stockIntervalPriceEntityOptional.isPresent()) {
-      throw new AlreadyExistsException("Stock Interval Price already existed in the database");
+      throw new AlreadyExistsException(
+          "Stock Interval Price Record (stockId: {0}, intervalId: {1}, endTime: {2}) already exists"
+          , stockIntervalPriceEntity.getStockId(), stockIntervalPriceEntity.getIntervalId(),
+          stockIntervalPriceEntity.getEndTime());
     } else {
       return stockIntervalPriceRepository.save(stockIntervalPriceEntity);
     }
