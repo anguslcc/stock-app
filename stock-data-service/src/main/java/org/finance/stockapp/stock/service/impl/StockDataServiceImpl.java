@@ -83,21 +83,21 @@ public class StockDataServiceImpl implements StockDataService {
     List<StockIntervalPriceEntity> inputList = stockPriceList.stream()
         .sorted(Comparator.comparing(StockIntervalPriceEntity::getEndTime)).toList();
 
-    Double high = inputList.stream()
+    double high = inputList.stream()
         .mapToDouble(StockIntervalPriceEntity::getHigh)
         .max()
         .orElse(0);
 
-    Double low = inputList.stream()
+    double low = inputList.stream()
         .mapToDouble(StockIntervalPriceEntity::getLow)
         .min()
         .orElse(0);
 
-    Integer volume = inputList.stream()
+    int volume = inputList.stream()
         .mapToInt(StockIntervalPriceEntity::getVolume)
         .sum();
 
-    Integer intervalValue = inputList.stream()
+    int intervalValue = inputList.stream()
         .mapToInt(x -> x.getIntervalEntity().getValue())
         .sum();
 
@@ -119,8 +119,7 @@ public class StockDataServiceImpl implements StockDataService {
   private StockIntervalData getLatestStockIntervalData(
       List<StockIntervalPriceEntity> stockPriceList) {
     StockIntervalPriceEntity stockIntervalPrice = stockPriceList.stream()
-        .sorted(Comparator.comparing(StockIntervalPriceEntity::getEndTime).reversed())
-        .findFirst()
+        .max(Comparator.comparing(StockIntervalPriceEntity::getEndTime))
         .orElse(new StockIntervalPriceEntity());
 
     return StockIntervalData.newBuilder()

@@ -5,6 +5,7 @@ import org.finance.stockapp.stock.entity.IntervalEntity;
 import org.finance.stockapp.stock.entity.StockInfoEntity;
 import org.finance.stockapp.stock.entity.StockIntervalPriceEntity;
 import org.finance.stockapp.stock.entity.StockIntervalPriceId;
+import org.finance.stockapp.stock.exception.AlreadyExistsException;
 import org.finance.stockapp.stock.repository.IntervalRepository;
 import org.finance.stockapp.stock.repository.StockInfoRepository;
 import org.finance.stockapp.stock.repository.StockIntervalPriceRepository;
@@ -29,7 +30,7 @@ public class StockTransactionServiceImpl implements StockTransactionService {
   }
 
   @Override
-  @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+  @Transactional(propagation = Propagation.REQUIRES_NEW)
   public StockInfoEntity saveStockInfo(StockInfoEntity stockInfoEntity) {
 
     Optional<StockInfoEntity> stockInfoEntityOptional = stockInfoRepository.getBy(
@@ -41,7 +42,7 @@ public class StockTransactionServiceImpl implements StockTransactionService {
   }
 
   @Override
-  @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+  @Transactional(propagation = Propagation.REQUIRES_NEW)
   public IntervalEntity saveInterval(IntervalEntity intervalEntity) {
     Optional<IntervalEntity> intervalEntityOptional = intervalRepository.getBy(
         intervalEntity.getValue(), intervalEntity.getUnit());
@@ -51,7 +52,7 @@ public class StockTransactionServiceImpl implements StockTransactionService {
   }
 
   @Override
-  @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+  @Transactional(propagation = Propagation.REQUIRES_NEW)
   public StockIntervalPriceEntity saveStockIntervalPrice(
       StockIntervalPriceEntity stockIntervalPriceEntity) {
     StockIntervalPriceId stockIntervalPriceId = new StockIntervalPriceId(
@@ -61,8 +62,11 @@ public class StockTransactionServiceImpl implements StockTransactionService {
     Optional<StockIntervalPriceEntity> stockIntervalPriceEntityOptional = stockIntervalPriceRepository.findById(
         stockIntervalPriceId);
 
-    return stockIntervalPriceEntityOptional.orElseGet(() -> stockIntervalPriceRepository.save(
-        stockIntervalPriceEntity));
+    if (stockIntervalPriceEntityOptional.isPresent()) {
+      throw new AlreadyExistsException("Stock Interval Price already existed in the database");
+    } else {
+      return stockIntervalPriceRepository.save(stockIntervalPriceEntity);
+    }
 
   }
 }
