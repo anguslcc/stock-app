@@ -49,12 +49,9 @@
     <module>gateway-service</module>
     <module>stock-data-service</module>
     <module>stock-quote-producer</module>
-    <module>app-config-data</module>
     <module>message-queue-lib</module>
     <module>stock-quote-consumer</module>
-    <module>common-config</module>
-    <module>common-payload</module>
-    <module>common-security</module>
+    <module>common-lib</module>
   </modules>
 
   <dependencyManagement>
