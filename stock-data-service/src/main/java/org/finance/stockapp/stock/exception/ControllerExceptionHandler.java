@@ -20,12 +20,21 @@ public class ControllerExceptionHandler {
   @ExceptionHandler({NotFoundException.class, NoResourceFoundException.class})
   public ResponseEntity<Void> handleNotFoundException(
       Exception ex) {
+    LOG.error("NotFoundException was occurred, message: {}", ex.getMessage());
     return buildErrorResponse(ex, HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(AlreadyExistsException.class)
+  public ResponseEntity<Void> handleAlreadyExistsException(
+      Exception ex) {
+    LOG.error("AlreadyExistsException was occurred, message: {}", ex.getMessage());
+    return buildErrorResponse(ex, HttpStatus.CONFLICT);
   }
 
   @ExceptionHandler(AccessDeniedException.class)
   public ResponseEntity<Void> handleAccessDeniedException(
       Exception ex) {
+    LOG.error("AccessDeniedException was occurred, message: {}", ex.getMessage());
     return buildErrorResponse(ex, HttpStatus.FORBIDDEN);
   }
 

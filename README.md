@@ -125,12 +125,13 @@ Before you begin, ensure you have the following software installed on your syste
 
 ## 2.5  Test the Application
 
-- Import `postman/Stock-Application-API.postman_collection.json` into Postman, there are five API
+- Import `postman/Stock-Application-API.postman_collection.json` into Postman, there are six API
   requests as below
     - Get Access Token (Full Control)
     - Get Access Token (Read)
     - Get All Available Stocks
-    - Get Stock Details
+    - Get Stock Details (Symbol / Exchange)
+    - Get Stock Details (Id)
     - Save Stock Data
 
 ### 2.5.1  Scenario 1 (Unauthorized Request)
@@ -150,9 +151,11 @@ Before you begin, ensure you have the following software installed on your syste
 ### 2.5.4  Scenario 4 (Continuous Data Retrieval)
 
 - Obtain an access token from Keycloak by running the `Get Access Token (Read)` API request.
-- Execute the `Get Stock Details` API request. Ensure to update the id parameter as necessary based
+- Execute the `Get Stock Details (Symbol / Exchange)` API request. Ensure to update the parameter as
+  necessary based
   on the output from the `Get All Available Stocks` request.
-- Wait for 1 minute and repeat the `Get Stock Details API` request to verify continuous data
+- Wait for 1 minute and repeat the `Get Stock Details (Symbol / Exchange)` request to verify
+  continuous data
   fetching.
 
 ## 2.6  Database

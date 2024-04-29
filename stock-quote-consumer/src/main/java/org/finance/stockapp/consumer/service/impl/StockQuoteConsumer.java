@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
@@ -113,11 +114,18 @@ public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
         .uri("/stock-data/stocks")
         .body(Mono.just(stockDataRequest), StockDataRequest.class)
         .retrieve()
+        .onStatus(HttpStatus.CONFLICT::equals, clientResponse -> {
+          LOG.info(
+              "Stock record (symbol: {}, exchange: {}, interval: {}, endTime: {}, ) already exists. Request ignored."
+              , stockDataRequest.getSymbol(), stockDataRequest.getExchange(),
+              stockDataRequest.getInterval(), stockDataRequest.getEndTime());
+          return Mono.empty();
+        })
         .toBodilessEntity()
         .block();
 
     if (response != null) {
-      LOG.info("Response: {} ", response.getStatusCode().is2xxSuccessful());
+      LOG.info("Is request success? {} ", response.getStatusCode().is2xxSuccessful());
     } else {
       LOG.info("Response is null");
     }

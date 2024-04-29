@@ -3,7 +3,6 @@ package org.finance.stockapp.stock.service.impl;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import org.finance.common.payload.StockDataRequest;
 import org.finance.common.payload.StockDetailResponse;
 import org.finance.common.payload.StockIntervalData;
@@ -11,13 +10,11 @@ import org.finance.common.payload.StockMetaResponse;
 import org.finance.stockapp.stock.entity.IntervalEntity;
 import org.finance.stockapp.stock.entity.StockInfoEntity;
 import org.finance.stockapp.stock.entity.StockIntervalPriceEntity;
-import org.finance.stockapp.stock.entity.StockIntervalPriceId;
 import org.finance.stockapp.stock.exception.NotFoundException;
 import org.finance.stockapp.stock.extractor.StockDataRequestExtractor;
-import org.finance.stockapp.stock.repository.IntervalRepository;
 import org.finance.stockapp.stock.repository.StockInfoRepository;
-import org.finance.stockapp.stock.repository.StockIntervalPriceRepository;
 import org.finance.stockapp.stock.service.StockDataService;
+import org.finance.stockapp.stock.service.StockTransactionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -29,17 +26,12 @@ public class StockDataServiceImpl implements StockDataService {
 
   private static final Logger LOG = LoggerFactory.getLogger(StockDataServiceImpl.class);
   private final StockInfoRepository stockInfoRepository;
-
-  private final IntervalRepository intervalRepository;
-
-  private final StockIntervalPriceRepository stockIntervalPriceRepository;
+  private final StockTransactionService stockTransactionService;
 
   public StockDataServiceImpl(StockInfoRepository stockInfoRepository,
-      IntervalRepository intervalRepository,
-      StockIntervalPriceRepository stockIntervalPriceRepository) {
+      StockTransactionService stockTransactionService) {
     this.stockInfoRepository = stockInfoRepository;
-    this.intervalRepository = intervalRepository;
-    this.stockIntervalPriceRepository = stockIntervalPriceRepository;
+    this.stockTransactionService = stockTransactionService;
   }
 
   @Override
@@ -49,45 +41,38 @@ public class StockDataServiceImpl implements StockDataService {
     StockDataRequestExtractor stockDataRequestExtractor = new StockDataRequestExtractor(
         stockDataRequest);
 
-    Optional<StockInfoEntity> stockInfoEntityOptional = stockInfoRepository.getBy(
-        stockDataRequest.getSymbol(), stockDataRequest.getExchange());
+    StockInfoEntity stockInfoEntity = stockTransactionService.saveStockInfo(
+        stockDataRequestExtractor.getStockInfoEntity());
 
-    StockInfoEntity stockInfoEntity = stockInfoEntityOptional.orElseGet(
-        () -> stockInfoRepository.save(stockDataRequestExtractor.getStockInfoEntity()));
+    IntervalEntity intervalEntity = stockTransactionService.saveInterval(
+        stockDataRequestExtractor.getIntervalEntity());
 
-    Optional<IntervalEntity> intervalEntityOptional = intervalRepository.getBy(
-        stockDataRequest.getIntervalValue(), stockDataRequest.getIntervalUnit());
-
-    IntervalEntity intervalEntity = intervalEntityOptional.orElseGet(() -> intervalRepository.save(
-        stockDataRequestExtractor.getIntervalEntity()));
-
-    StockIntervalPriceId stockIntervalPriceId = new StockIntervalPriceId(stockInfoEntity.getId(),
-        stockDataRequest.getEndTime(), intervalEntity.getId());
-
-    if (!stockIntervalPriceRepository.existsById(stockIntervalPriceId)) {
-      stockIntervalPriceRepository.save(
-          stockDataRequestExtractor.getStockIntervalPriceEntity(stockInfoEntity.getId(),
-              intervalEntity.getId())
-      );
-    }
+    stockTransactionService.saveStockIntervalPrice(
+        stockDataRequestExtractor.getStockIntervalPriceEntity(stockInfoEntity.getId(),
+            intervalEntity.getId())
+    );
 
   }
 
   @Override
   @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
   public StockDetailResponse getStockInfo(Integer id) {
-    StockDetailResponse stockDetailResponse = new StockDetailResponse();
-
     StockInfoEntity stockInfoEntity = stockInfoRepository.findById(id).orElseThrow(
-        () -> new NotFoundException("Stock not found"));
+        () -> new NotFoundException(
+            "Sorry, the requested stock record (id: {0}) could not be found.", id));
 
-    stockDetailResponse.setMeta(stockInfoEntity.toStockMetaResponse());
-    stockDetailResponse.setLatest(
-        getLatestStockIntervalData(stockInfoEntity.getStockIntervalPriceEntityList()));
-    stockDetailResponse.setAggregated(
-        buildAggregatedStockIntervalData(stockInfoEntity.getStockIntervalPriceEntityList()));
+    return buildStockDetailResponse(stockInfoEntity);
+  }
 
-    return stockDetailResponse;
+  @Override
+  @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+  public StockDetailResponse getStockInfo(String symbol, String exchange) {
+    StockInfoEntity stockInfoEntity = stockInfoRepository.getBy(symbol, exchange).orElseThrow(
+        () -> new NotFoundException(
+            "Sorry, the requested stock record (symbol: {0}, exchange: {1}) could not be found.",
+            symbol, exchange));
+
+    return buildStockDetailResponse(stockInfoEntity);
   }
 
   @Override
@@ -102,21 +87,21 @@ public class StockDataServiceImpl implements StockDataService {
     List<StockIntervalPriceEntity> inputList = stockPriceList.stream()
         .sorted(Comparator.comparing(StockIntervalPriceEntity::getEndTime)).toList();
 
-    Double high = inputList.stream()
+    double high = inputList.stream()
         .mapToDouble(StockIntervalPriceEntity::getHigh)
         .max()
         .orElse(0);
 
-    Double low = inputList.stream()
+    double low = inputList.stream()
         .mapToDouble(StockIntervalPriceEntity::getLow)
         .min()
         .orElse(0);
 
-    Integer volume = inputList.stream()
+    int volume = inputList.stream()
         .mapToInt(StockIntervalPriceEntity::getVolume)
         .sum();
 
-    Integer intervalValue = inputList.stream()
+    int intervalValue = inputList.stream()
         .mapToInt(x -> x.getIntervalEntity().getValue())
         .sum();
 
@@ -138,8 +123,7 @@ public class StockDataServiceImpl implements StockDataService {
   private StockIntervalData getLatestStockIntervalData(
       List<StockIntervalPriceEntity> stockPriceList) {
     StockIntervalPriceEntity stockIntervalPrice = stockPriceList.stream()
-        .sorted(Comparator.comparing(StockIntervalPriceEntity::getEndTime).reversed())
-        .findFirst()
+        .max(Comparator.comparing(StockIntervalPriceEntity::getEndTime))
         .orElse(new StockIntervalPriceEntity());
 
     return StockIntervalData.newBuilder()
@@ -152,6 +136,17 @@ public class StockDataServiceImpl implements StockDataService {
         .setEndTime(stockIntervalPrice.getEndTime())
         .build();
 
+  }
+
+  private StockDetailResponse buildStockDetailResponse(StockInfoEntity stockInfoEntity) {
+    StockDetailResponse stockDetailResponse = new StockDetailResponse();
+    stockDetailResponse.setMeta(stockInfoEntity.toStockMetaResponse());
+    stockDetailResponse.setLatest(
+        getLatestStockIntervalData(stockInfoEntity.getStockIntervalPriceEntityList()));
+    stockDetailResponse.setAggregated(
+        buildAggregatedStockIntervalData(stockInfoEntity.getStockIntervalPriceEntityList()));
+
+    return stockDetailResponse;
   }
 
 }
