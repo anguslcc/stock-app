@@ -12,5 +12,7 @@ public interface StockDataService {
 
   StockDetailResponse getStockInfo(Integer id);
 
+  StockDetailResponse getStockInfo(String symbol, String exchange);
+
   List<StockMetaResponse> getStockMetaList();
 }

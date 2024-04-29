@@ -42,6 +42,14 @@ public class StockDataController {
     return ResponseEntity.ok(stockDataService.getStockInfo(id));
   }
 
+  @GetMapping(value = "/stocks/symbol/{symbol}/exchange/{exchange}",
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("hasAnyAuthority('READ-ROLE')")
+  public ResponseEntity<StockDetailResponse> getStockInfo(@PathVariable String symbol,
+      @PathVariable String exchange) {
+    return ResponseEntity.ok(stockDataService.getStockInfo(symbol, exchange));
+  }
+
   @PostMapping(value = "/stocks",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)

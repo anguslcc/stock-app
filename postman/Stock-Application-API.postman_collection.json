@@ -53,12 +53,10 @@
           ]
         },
         "url": {
-          "raw": "http://localhost:7000/realms/stockapp/protocol/openid-connect/token",
-          "protocol": "http",
+          "raw": "{{base_token_url}}/realms/stockapp/protocol/openid-connect/token",
           "host": [
-            "localhost"
+            "{{base_token_url}}"
           ],
-          "port": "7000",
           "path": [
             "realms",
             "stockapp",
@@ -117,12 +115,10 @@
           ]
         },
         "url": {
-          "raw": "http://localhost:7000/realms/stockapp/protocol/openid-connect/token",
-          "protocol": "http",
+          "raw": "{{base_token_url}}/realms/stockapp/protocol/openid-connect/token",
           "host": [
-            "localhost"
+            "{{base_token_url}}"
           ],
-          "port": "7000",
           "path": [
             "realms",
             "stockapp",
@@ -162,12 +158,10 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8080/stock-data/stocks/",
-          "protocol": "http",
+          "raw": "{{base_application_url}}/stock-data/stocks/",
           "host": [
-            "localhost"
+            "{{base_application_url}}"
           ],
-          "port": "8080",
           "path": [
             "stock-data",
             "stocks",
@@ -178,7 +172,7 @@
       "response": []
     },
     {
-      "name": "Get Stock Details",
+      "name": "Get Stock Details [Symbol / Exchange]",
       "protocolProfileBehavior": {
         "disableBodyPruning": true
       },
@@ -205,12 +199,54 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8080/stock-data/stocks/1",
-          "protocol": "http",
+          "raw": "{{base_application_url}}/stock-data/stocks/symbol/AAPL/exchange/NASDAQ",
           "host": [
-            "localhost"
+            "{{base_application_url}}"
           ],
-          "port": "8080",
+          "path": [
+            "stock-data",
+            "stocks",
+            "symbol",
+            "AAPL",
+            "exchange",
+            "NASDAQ"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Stock Details [Id]",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_application_url}}/stock-data/stocks/1",
+          "host": [
+            "{{base_application_url}}"
+          ],
           "path": [
             "stock-data",
             "stocks",
@@ -251,12 +287,10 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8080/stock-data/stocks",
-          "protocol": "http",
+          "raw": "{{base_application_url}}/stock-data/stocks",
           "host": [
-            "localhost"
+            "{{base_application_url}}"
           ],
-          "port": "8080",
           "path": [
             "stock-data",
             "stocks"
@@ -292,6 +326,16 @@
     {
       "key": "access_token",
       "value": "",
+      "type": "string"
+    },
+    {
+      "key": "base_application_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "base_token_url",
+      "value": "http://localhost:7000",
       "type": "string"
     }
   ]

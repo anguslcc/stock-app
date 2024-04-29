@@ -57,18 +57,19 @@ public class StockDataServiceImpl implements StockDataService {
   @Override
   @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
   public StockDetailResponse getStockInfo(Integer id) {
-    StockDetailResponse stockDetailResponse = new StockDetailResponse();
-
     StockInfoEntity stockInfoEntity = stockInfoRepository.findById(id).orElseThrow(
         () -> new NotFoundException("Stock not found"));
 
-    stockDetailResponse.setMeta(stockInfoEntity.toStockMetaResponse());
-    stockDetailResponse.setLatest(
-        getLatestStockIntervalData(stockInfoEntity.getStockIntervalPriceEntityList()));
-    stockDetailResponse.setAggregated(
-        buildAggregatedStockIntervalData(stockInfoEntity.getStockIntervalPriceEntityList()));
+    return buildStockDetailResponse(stockInfoEntity);
+  }
 
-    return stockDetailResponse;
+  @Override
+  @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+  public StockDetailResponse getStockInfo(String symbol, String exchange) {
+    StockInfoEntity stockInfoEntity = stockInfoRepository.getBy(symbol, exchange).orElseThrow(
+        () -> new NotFoundException("Stock not found"));
+
+    return buildStockDetailResponse(stockInfoEntity);
   }
 
   @Override
@@ -132,6 +133,17 @@ public class StockDataServiceImpl implements StockDataService {
         .setEndTime(stockIntervalPrice.getEndTime())
         .build();
 
+  }
+
+  private StockDetailResponse buildStockDetailResponse(StockInfoEntity stockInfoEntity) {
+    StockDetailResponse stockDetailResponse = new StockDetailResponse();
+    stockDetailResponse.setMeta(stockInfoEntity.toStockMetaResponse());
+    stockDetailResponse.setLatest(
+        getLatestStockIntervalData(stockInfoEntity.getStockIntervalPriceEntityList()));
+    stockDetailResponse.setAggregated(
+        buildAggregatedStockIntervalData(stockInfoEntity.getStockIntervalPriceEntityList()));
+
+    return stockDetailResponse;
   }
 
 }
