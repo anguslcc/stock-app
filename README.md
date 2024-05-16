@@ -1,10 +1,11 @@
 # TABLE OF CONTENTS
 
-1. <a href="#1-Project-Overview" id="1">Project Overview</a>
-2. <a href="#2-Getting-Started" id="2">Getting Started</a>
-3. <a href="#3-Whats-Next" id="3">What’s Next</a>
+- [1. Project Overview](#1-Project-Overview)
+- [2. Getting Started](#2-Getting-Started")
+- [3. How It Works](#3-How-It-Works)
+- [4. What’s Next](#4-Whats-Next")
 
-# 1. Project Overview<a id="#1-Project-Overview" href="#1"></a>
+# 1. Project Overview<a name="#1-Project-Overview"></a>
 
 This application demonstrates the integration of Apache Kafka, Keycloak, and the Elastic Stack (
 Elasticsearch, Logstash, and Kibana) with Spring Cloud. It continuously retrieves market data from
@@ -72,7 +73,7 @@ all microservices, enhancing system capabilities and operational transparency.
 
 - **Kibana:** Provides powerful visualizations for data stored in Elasticsearch.
 
-# 2. Getting Started<a id="#2-Getting-Started" href="#2"></a>
+# 2. Getting Started<a name="#2-Getting-Started"></a>
 
 ## 2.1  Pre-requisites
 
@@ -198,11 +199,16 @@ View and analyze logs through Kibana using the administration console.
 - **Password:** password
 - **Indices for logs:** logstash-*
 
-## 3. What’s Next<a id="#3-Whats-Next" href="#3"></a>
+## 3. How It Works<a name="#3-How-It-Works"></a>
 
-- **Document Architecture:** Provide detailed documentation on the project's architecture. This will
-  include diagrams and descriptions to help users understand how the components interact and how
-  data flows within the system.
+This section is under development and will be updated with detailed information in the near future.
+Stay tuned!
+
+## 4. What’s Next<a name="#4-Whats-Next"></a>
+
+- **Develop the 'How It Works' Section:** A new section titled 'How It Works' will be created to
+  provide in-depth explanations and guides on integrating key components such as Keycloak Server and
+  Kafka into the application.
 - **Transition to KRaft:** With ZooKeeper being marked as deprecated since the 3.5.0 release of
   Apache Kafka, this project will shift to using the KRaft metadata system. This move follows
   recommendations from Apache to adopt their newer approach for metadata management.
