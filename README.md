@@ -1,9 +1,9 @@
 # TABLE OF CONTENTS
 
 - [1. Project Overview](#1-Project-Overview)
-- [2. Getting Started](#2-Getting-Started")
+- [2. Getting Started](#2-Getting-Started)
 - [3. How It Works](#3-How-It-Works)
-- [4. What’s Next](#4-Whats-Next")
+- [4. What’s Next](#4-Whats-Next)
 
 # 1. Project Overview<a name="#1-Project-Overview"></a>
 
