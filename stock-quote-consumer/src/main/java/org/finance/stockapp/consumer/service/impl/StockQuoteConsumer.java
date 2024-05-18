@@ -57,19 +57,19 @@ public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
 
   @Override
   @KafkaListener(id = "${kafka-consumer-config.consumer-group-id}", topics = "${kafka-config.topic-name}")
-  public void receive(@Payload List<StockQuoteAvroModel> messages,
+  public void receive(@Payload List<StockQuoteAvroModel> messageList,
       @Header(KafkaHeaders.RECEIVED_KEY) List<Long> keys,
-      @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
-      @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
+      @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitionList,
+      @Header(KafkaHeaders.OFFSET) List<Long> offsetList) {
     LOG.info("{} number of message received with keys {}, partitions {} and offsets {}, " +
             "sending it to elastic: Thread id {}",
-        messages.size(),
+        messageList.size(),
         keys,
-        partitions,
-        offsets,
+        partitionList,
+        offsetList,
         Thread.currentThread().getId());
 
-    for (StockQuoteAvroModel message : messages) {
+    for (StockQuoteAvroModel message : messageList) {
       LOG.info(
           "Symbol: {}, Interval: {}, Currency: {}, High: {}, Low: {}, Open: {}, Close: {}, Volume: {}, DateTime: {} ",
           message.getSymbol(),
@@ -83,13 +83,13 @@ public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
           LocalDateTime.ofInstant(Instant.ofEpochMilli(message.getDatetime()),
               TimeZone.getDefault().toZoneId()));
 
-      saveStockData(message);
+      stockDataRestService.saveStockData(buildStockDataRequest(message));
     }
 
   }
 
-  private void saveStockData(StockQuoteAvroModel message) {
-    StockDataRequest stockDataRequest = StockDataRequest
+  private StockDataRequest buildStockDataRequest(StockQuoteAvroModel message) {
+    return StockDataRequest
         .newBuilder()
         .setSymbol(message.getSymbol())
         .setCurrency(message.getCurrency())
@@ -103,9 +103,6 @@ public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
         .setClose(message.getClose())
         .setVolume(message.getVolume())
         .build();
-
-    stockDataRestService.saveStockData(stockDataRequest);
-
   }
 
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 public class TwelveDataRequestImpl implements MarketDataRequestService {
@@ -64,26 +65,28 @@ public class TwelveDataRequestImpl implements MarketDataRequestService {
 
   private ResponseEntity<MarketDataResponse> getMarketDataResponse(String symbol) {
     return webClient.get()
-        .uri(uriBuilder -> {
-              URI uri = uriBuilder
-                  .scheme(twelveConfigData.getScheme())
-                  .host(twelveConfigData.getHost())
-                  .path(twelveConfigData.getPath())
-                  .queryParam("apikey", apiKeyConfigData.getTwelve())
-                  .queryParam("interval", twelveConfigData.getInterval())
-                  .queryParam("symbol", symbol)
-                  .queryParam("format", "JSON")
-                  .queryParam("outputsize", twelveConfigData.getOutputSize())
-                  .build();
-              LOG.info("uri {} ", uri);
-              return uri;
-            }
-        )
+        .uri(buildUri(symbol))
         .retrieve()
         .toEntity(MarketDataResponse.class)
-        .doOnError(e -> LOG.info("Error: {} ", e.getMessage()))
+        .doOnError(e -> LOG.error("Data Request Error: {} ", e.getMessage()))
         .timeout(Duration.ofSeconds(10))
         .block();
+  }
+
+  private URI buildUri(String symbol) {
+    URI uri = UriComponentsBuilder.newInstance()
+        .scheme(twelveConfigData.getScheme())
+        .host(twelveConfigData.getHost())
+        .path(twelveConfigData.getPath())
+        .queryParam("apikey", apiKeyConfigData.getTwelve())
+        .queryParam("interval", twelveConfigData.getInterval())
+        .queryParam("symbol", symbol)
+        .queryParam("format", "JSON")
+        .queryParam("outputsize", twelveConfigData.getOutputSize())
+        .build()
+        .toUri();
+    LOG.info("Request URI: {}", uri);
+    return uri;
   }
 
 
