@@ -9,23 +9,19 @@ import org.finance.common.payload.StockDataRequest;
 import org.finance.config.kafka.KafkaConfigData;
 import org.finance.config.kafka.KafkaConsumerConfigData;
 import org.finance.stockapp.consumer.service.KafkaConsumer;
+import org.finance.stockapp.consumer.service.StockDataRestService;
 import org.message.queue.kafka.admin.KafkaAdminClient;
 import org.message.queue.kafka.model.avro.StockQuoteAvroModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 @Service
 public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
@@ -36,19 +32,18 @@ public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
   private final KafkaConfigData kafkaConfigData;
   private final KafkaConsumerConfigData kafkaConsumerConfigData;
 
-  private final WebClient webClient;
-
+  private final StockDataRestService stockDataRestService;
 
   public StockQuoteConsumer(KafkaListenerEndpointRegistry listenerEndpointRegistry,
       KafkaAdminClient adminClient,
       KafkaConfigData configData,
       KafkaConsumerConfigData consumerConfigData,
-      @Qualifier("stockAppWebClient") WebClient webClient) {
+      StockDataRestService stockDataRestService) {
     this.kafkaListenerEndpointRegistry = listenerEndpointRegistry;
     this.kafkaAdminClient = adminClient;
     this.kafkaConfigData = configData;
     this.kafkaConsumerConfigData = consumerConfigData;
-    this.webClient = webClient;
+    this.stockDataRestService = stockDataRestService;
   }
 
   @EventListener
@@ -88,13 +83,12 @@ public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
           LocalDateTime.ofInstant(Instant.ofEpochMilli(message.getDatetime()),
               TimeZone.getDefault().toZoneId()));
 
-      callStockDataService(message);
+      saveStockData(message);
     }
 
   }
 
-  private void callStockDataService(StockQuoteAvroModel message) {
-    LOG.info("Calling StockDataService: {}", message.getSymbol());
+  private void saveStockData(StockQuoteAvroModel message) {
     StockDataRequest stockDataRequest = StockDataRequest
         .newBuilder()
         .setSymbol(message.getSymbol())
@@ -110,25 +104,7 @@ public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
         .setVolume(message.getVolume())
         .build();
 
-    ResponseEntity<Void> response = webClient.post()
-        .uri("/stock-data/stocks")
-        .body(Mono.just(stockDataRequest), StockDataRequest.class)
-        .retrieve()
-        .onStatus(HttpStatus.CONFLICT::equals, clientResponse -> {
-          LOG.info(
-              "Stock record (symbol: {}, exchange: {}, interval: {}, endTime: {}, ) already exists. Request ignored."
-              , stockDataRequest.getSymbol(), stockDataRequest.getExchange(),
-              stockDataRequest.getInterval(), stockDataRequest.getEndTime());
-          return Mono.empty();
-        })
-        .toBodilessEntity()
-        .block();
-
-    if (response != null) {
-      LOG.info("Is request success? {} ", response.getStatusCode().is2xxSuccessful());
-    } else {
-      LOG.info("Response is null");
-    }
+    stockDataRestService.saveStockData(stockDataRequest);
 
   }
 

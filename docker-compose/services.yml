@@ -49,8 +49,8 @@ services:
         condition: service_healthy
       keycloak:
         condition: service_healthy
-      stock-data-service:
-        condition: service_healthy
+#      stock-data-service:
+#        condition: service_healthy
       logstash01:
         condition: service_healthy
     environment:
