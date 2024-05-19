@@ -7,6 +7,7 @@ import java.util.List;
 import org.finance.config.api.ApiKeyConfigData;
 import org.finance.config.twelve.TwelveConfigData;
 import org.finance.stockapp.producer.external.payload.MarketDataResponse;
+import org.finance.stockapp.producer.external.payload.enums.Status;
 import org.finance.stockapp.producer.external.service.MarketDataRequestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,16 +48,13 @@ public class TwelveDataRequestImpl implements MarketDataRequestService {
 
       ResponseEntity<MarketDataResponse> response = getMarketDataResponse(symbol);
 
-      if (response != null && response.getStatusCode().is2xxSuccessful()) {
+      if (validateMarketDataResponse(response)) {
         marketDataResponseList.add(response.getBody());
       } else {
-        if (response != null) {
-          LOG.error("Error requesting data with Status Code: {} ", response.getStatusCode());
-        } else {
-          LOG.error("Error requesting data with Null response");
-
-        }
+        LOG.error("Error in marketDataResponse for {}. Please refer to log below",
+            twelveConfigData.getSymbols());
       }
+      printMarketDataResponse(response);
 
     }
 
@@ -89,5 +87,27 @@ public class TwelveDataRequestImpl implements MarketDataRequestService {
     return uri;
   }
 
+  private boolean validateMarketDataResponse(ResponseEntity<MarketDataResponse> response) {
+    boolean isValid = false;
+
+    if (response != null && response.getStatusCode().is2xxSuccessful()) {
+      MarketDataResponse marketDataResponse = response.getBody();
+      if (marketDataResponse != null && Status.OK.equals(marketDataResponse.getStatus())) {
+        isValid = true;
+      }
+    }
+
+    return isValid;
+
+  }
+
+  private void printMarketDataResponse(ResponseEntity<MarketDataResponse> response) {
+    if (response == null) {
+      LOG.info("Response is Null");
+    } else {
+      LOG.info("Response Status Code : {}", response.getStatusCode().value());
+      LOG.info("marketDataResponse: {} ", response.getBody());
+    }
+  }
 
 }
