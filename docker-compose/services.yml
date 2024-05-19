@@ -14,11 +14,11 @@ services:
       config-service:
         condition: service_healthy
       kafka-broker-1:
-        condition: service_started
+        condition: service_healthy
       kafka-broker-2:
-        condition: service_started
+        condition: service_healthy
       kafka-broker-3:
-        condition: service_started
+        condition: service_healthy
       schema-registry:
         condition: service_started
       logstash01:
@@ -40,11 +40,11 @@ services:
       config-service:
         condition: service_healthy
       kafka-broker-1:
-        condition: service_started
+        condition: service_healthy
       kafka-broker-2:
-        condition: service_started
+        condition: service_healthy
       kafka-broker-3:
-        condition: service_started
+        condition: service_healthy
       schema-registry:
         condition: service_started
       keycloak:

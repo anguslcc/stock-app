@@ -48,7 +48,7 @@ public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
 
   @EventListener
   public void onAppStarted(ApplicationStartedEvent event) {
-    kafkaAdminClient.checkTopicsCreated();
+    kafkaAdminClient.checkTopicListCreated();
     LOG.info("Topics with name {} is ready for operations!",
         kafkaConfigData.getTopicNamesToCreate().toArray());
     Objects.requireNonNull(kafkaListenerEndpointRegistry
