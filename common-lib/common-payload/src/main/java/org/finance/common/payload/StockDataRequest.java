@@ -87,6 +87,10 @@ public class StockDataRequest {
         '}';
   }
 
+  public String toKeyString() {
+    return String.format("KeyInfo{%s|%s|%s}", symbol, exchange, endTime);
+  }
+
   public Integer getIntervalValue() {
     if (this.interval != null) {
       String intervalValueStr = this.interval.replaceAll("[^\\d]", "");

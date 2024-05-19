@@ -109,7 +109,7 @@ services:
       es01:
         condition: service_healthy
       kibana:
-        condition: service_healthy
+        condition: service_started
     image: docker.elastic.co/logstash/logstash:${ELK_VERSION}
     labels:
       co.elastic.logs/module: logstash

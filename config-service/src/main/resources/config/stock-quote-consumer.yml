@@ -29,9 +29,9 @@ kafka-consumer-config:
 
 retry-config:
   initial-interval-ms: 1000
-  max-interval-ms: 10000
+  max-interval-ms: 30000
   multiplier: 2.0
-  maxAttempts: 3
+  maxAttempts: 20
   sleep-time-ms: 2000
 
 microservice-config:

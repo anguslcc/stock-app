@@ -14,13 +14,13 @@ services:
       config-service:
         condition: service_healthy
       kafka-broker-1:
-        condition: service_healthy
+        condition: service_started
       kafka-broker-2:
-        condition: service_healthy
+        condition: service_started
       kafka-broker-3:
-        condition: service_healthy
+        condition: service_started
       schema-registry:
-        condition: service_healthy
+        condition: service_started
       logstash01:
         condition: service_healthy
     healthcheck:
@@ -40,17 +40,17 @@ services:
       config-service:
         condition: service_healthy
       kafka-broker-1:
-        condition: service_healthy
+        condition: service_started
       kafka-broker-2:
-        condition: service_healthy
+        condition: service_started
       kafka-broker-3:
-        condition: service_healthy
+        condition: service_started
       schema-registry:
-        condition: service_healthy
+        condition: service_started
       keycloak:
         condition: service_healthy
       stock-data-service:
-        condition: service_healthy
+        condition: service_started
       logstash01:
         condition: service_healthy
     environment:
@@ -123,7 +123,7 @@ services:
       postgres:
         condition: service_healthy
       gateway-service:
-        condition: service_healthy
+        condition: service_started
       keycloak:
         condition: service_healthy
       logstash01:
