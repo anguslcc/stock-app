@@ -201,8 +201,9 @@ View and analyze logs through Kibana using the administration console.
 
 ## 3. How It Works<a name="#3-How-It-Works"></a>
 
-This section is under development and will be updated with detailed information in the near future.
-Stay tuned!
+- [Git Techniques: Tips and Tricks](documentation/git-techniques.md)
+
+Stay tuned for more subsections coming soon!
 
 ## 4. What’s Next<a name="#4-Whats-Next"></a>
 
