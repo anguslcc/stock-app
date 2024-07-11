@@ -202,6 +202,7 @@ View and analyze logs through Kibana using the administration console.
 ## 3. How It Works<a name="#3-How-It-Works"></a>
 
 - [Git Techniques: Tips and Tricks](documentation/git-techniques.md)
+- [Integration with Keycloak](documentation/integration-with-keycloak.md)
 
 Stay tuned for more subsections coming soon!
 
