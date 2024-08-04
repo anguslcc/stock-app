@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.5</version>
+    <version>3.3.2</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
@@ -25,16 +25,16 @@
   <name>stock-app</name>
   <description>Stock Application Parent</description>
   <properties>
-    <java.version>17</java.version>
-    <spring-cloud.version>2023.0.0</spring-cloud.version>
+    <java.version>21</java.version>
+    <spring-cloud.version>2023.0.3</spring-cloud.version>
     <avro.version>1.11.3</avro.version>
-    <spring-kafka.version>3.1.3</spring-kafka.version>
+    <spring-kafka.version>3.2.2</spring-kafka.version>
     <kafka-avro-serializer.version>7.6.0</kafka-avro-serializer.version>
     <spring-retry.version>2.0.5</spring-retry.version>
     <spring-aspects.version>6.1.5</spring-aspects.version>
     <jib-maven-plugin-version>3.4.1</jib-maven-plugin-version>
     <jib-maven-plugin.image>
-      eclipse-temurin:17-jre-focal@sha256:b8948181ccbda7928a6c5a1dc2e36e41f43bcb176fb958ae99a7c71d647df0f4
+      eclipse-temurin:21-jre@sha256:33c033fbc177c46ae097fc01575e6a0df665dbecc49d1cff2227b969672697cb
     </jib-maven-plugin.image>
     <jib-base-path>org.finance.stockapp</jib-base-path>
     <jackson-module-version>2.17.0</jackson-module-version>

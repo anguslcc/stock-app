@@ -81,7 +81,7 @@ Before you begin, ensure you have the following software installed on your syste
 
 - **Docker:** Used for hosting and managing application containers.
 - **Maven:** Required for building the project.
-- **Java JDK 17 or higher:** Necessary to run the Spring Boot applications.
+- **Java JDK 21 or higher:** Necessary to run the Spring Boot applications.
 - **Postman:** Recommended for testing and interacting with the application through its API
   endpoints.
 

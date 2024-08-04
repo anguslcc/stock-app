@@ -2,6 +2,7 @@ package org.finance.stockapp.producer.runner.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.finance.config.kafka.KafkaConfigData;
 import org.finance.config.stock.StockQuoteProducerConfigData;
@@ -46,24 +47,26 @@ public class StockQuoteStreamRunner implements StreamRunner {
   }
 
   private void startStockQuoteStream() {
-    Executors.newSingleThreadExecutor().submit(() -> {
-      long counter = 1L;
-      while (true) {
-        LOG.info("Creating Stock Quote Start");
-        List<MarketDataResponse> marketDataResponseList = marketDataService.getMarketData();
-        List<StockQuoteAvroModel> stockQuoteAvroModelList = new ArrayList<>();
-        for (MarketDataResponse marketDataResponse : marketDataResponseList) {
-          stockQuoteAvroModelList.addAll(MarketDataToAvroTransformer.from(marketDataResponse));
-        }
+    try (ExecutorService executorService = Executors.newSingleThreadExecutor()) {
+      executorService.submit(() -> {
+        long counter = 1L;
+        while (!Thread.currentThread().isInterrupted()) {
+          LOG.info("Creating Stock Quote Start");
+          List<MarketDataResponse> marketDataResponseList = marketDataService.getMarketData();
+          List<StockQuoteAvroModel> stockQuoteAvroModelList = new ArrayList<>();
+          for (MarketDataResponse marketDataResponse : marketDataResponseList) {
+            stockQuoteAvroModelList.addAll(MarketDataToAvroTransformer.from(marketDataResponse));
+          }
 
-        for (StockQuoteAvroModel stockQuoteAvroModel : stockQuoteAvroModelList) {
-          kafkaProducer.send(kafkaConfigData.getTopicName(), counter++, stockQuoteAvroModel);
-        }
+          for (StockQuoteAvroModel stockQuoteAvroModel : stockQuoteAvroModelList) {
+            kafkaProducer.send(kafkaConfigData.getTopicName(), counter++, stockQuoteAvroModel);
+          }
 
-        LOG.info("Sent Stock Quote to Kafka");
-        sleep(stockQuoteProducerConfigData.getSleepTime());
-      }
-    });
+          LOG.info("Sent Stock Quote to Kafka");
+          sleep(stockQuoteProducerConfigData.getSleepTime());
+        }
+      });
+    }
 
   }
 

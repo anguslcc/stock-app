@@ -4,7 +4,6 @@ import org.finance.common.payload.StockDataRequest;
 import org.finance.stockapp.stock.entity.IntervalEntity;
 import org.finance.stockapp.stock.entity.StockInfoEntity;
 import org.finance.stockapp.stock.entity.StockIntervalPriceEntity;
-import org.finance.common.enums.IntervalUnit;
 
 public class StockDataRequestExtractor {
 
