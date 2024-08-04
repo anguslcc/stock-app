@@ -51,7 +51,7 @@ public class StockQuoteKafkaProducerImpl implements KafkaProducer<Long, StockQuo
             metadata.timestamp(),
             System.nanoTime());
       } else {
-        LOG.error("Error while sending message {} to topic {}", message.toString(), topicName, ex);
+        LOG.error("Error while sending message {} to topic {}", message, topicName, ex);
       }
     };
   }

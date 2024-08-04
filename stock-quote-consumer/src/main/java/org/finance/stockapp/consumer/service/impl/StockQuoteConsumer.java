@@ -67,7 +67,7 @@ public class StockQuoteConsumer implements KafkaConsumer<StockQuoteAvroModel> {
         keys,
         partitionList,
         offsetList,
-        Thread.currentThread().getId());
+        Thread.currentThread().threadId());
 
     for (StockQuoteAvroModel message : messageList) {
       LOG.info(
